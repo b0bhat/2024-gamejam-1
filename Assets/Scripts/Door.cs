@@ -31,8 +31,7 @@ public class Door : MonoBehaviour {
     void Update() {
         
     }
-    void OnTriggerEnter2D(Collider2D other)
-    {
+    void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             // GenerateNewRoom();
         }

@@ -21,7 +21,7 @@ public class MapGenerator : MonoBehaviour
     
     void Start()
     {
-        GenerateRoom(Vector2.zero, 3); // Generate a 1x1 room at the spawn position
+        GenerateRoom(Vector2.zero, 3, true); // Generate a 1x1 room at the spawn position
         roomPositions.Add(Vector2.zero);
         MarkOccupied(Vector2.zero, 3);
         GenerateMap(numRooms);
@@ -44,7 +44,7 @@ public class MapGenerator : MonoBehaviour
             Vector2 newPosition = randomPosition + direction * randomSize;
             if (!IsOverlap(newPosition, randomSize)) {
                 if (IsAdjacentToRoom(newPosition, randomSize)) {
-                    GenerateRoom(newPosition, randomSize);
+                    GenerateRoom(newPosition, randomSize, false);
                     MarkOccupied(newPosition, randomSize);
                     roomPositions.Add(newPosition);
                 }
@@ -112,13 +112,16 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void GenerateRoom(Vector2 position, int size) {
+    void GenerateRoom(Vector2 position, int size, bool start=false) {
         GameObject room = Instantiate(roomPrefab);
         Room roomScript = room.GetComponent<Room>();
         roomScript.position_unit = position;
         roomScript.width_unit = size;
         roomScript.height_unit = size;
         roomScript.unit_mult = 1;
+        if (start == true) {
+            roomScript.hidden = false;
+        }
     }
 
     // Instantiate(doorPrefab, checkPosition, Quaternion.identity);

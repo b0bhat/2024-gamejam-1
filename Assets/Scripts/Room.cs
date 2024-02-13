@@ -21,6 +21,7 @@ public class Room : MonoBehaviour
     public List<GameObject> Doors;
     public float enterDoorRotation = 10;
     public bool door_generated = false;
+    public bool hidden = true;
 
     public struct WallPair {
         public GameObject thisWall;
@@ -42,6 +43,14 @@ public class Room : MonoBehaviour
         // Either 1 or 2
         numDoors = UnityEngine.Random.Range(1, Mathf.Max(width_unit, height_unit)+1);
         GenerateRoom();
+        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+        if (boxCollider != null) {
+            boxCollider.offset = new Vector2(position.x+width/2f, position.y+height/2f);
+            boxCollider.size = new Vector2(width, height);
+        }
+        if (hidden == true) {
+            HideRoom();
+        }
     }
 
     void GenerateRoom()
@@ -104,15 +113,40 @@ public class Room : MonoBehaviour
         }
         if (door_generated == false && thisWallsOverlap.Count > 0) {
             int middleIndex = thisWallsOverlap.Count / 2;
-            Debug.Log(middleIndex);
             if (thisWallsOverlap.Count % 2 == 0)
                 middleIndex = UnityEngine.Random.Range(middleIndex - 1, middleIndex + 1);
-            Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, thisWallsOverlap[middleIndex].thisWall.transform.rotation);
+            Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, thisWallsOverlap[middleIndex].thisWall.transform.rotation, transform);
             Destroy(thisWallsOverlap[middleIndex].thisWall);
             Destroy(thisWallsOverlap[middleIndex].otherWall);
             door_generated = true;
         }
         allWalls.AddRange(thisWalls);
+    }
+
+    public void HideRoom() {
+        hidden = true;
+        foreach (Transform child in transform) {
+            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+            // if (spriteRenderer != null && !child.CompareTag("Door")) {
+            if (spriteRenderer != null) {
+                spriteRenderer.renderingLayerMask  = 0;
+            }
+        }
+    }
+
+    public void ShowRoom() {
+        foreach (Transform child in transform){
+            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null) {
+                spriteRenderer.renderingLayerMask  = 1;
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            ShowRoom();
+        }
     }
 
 }
