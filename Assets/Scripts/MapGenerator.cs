@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    #region Singleton
+    public static MapGenerator instance;
+    void Awake() {
+        instance = this;
+    }
+    #endregion
     public GameObject roomPrefab;
     public GameObject doorPrefab;
     public int numRooms;
@@ -10,8 +16,10 @@ public class MapGenerator : MonoBehaviour
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
     private int[] roomSizes = { 2, 3, 4, 5 };
-    
+    public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
+    public List<GameObject> walls = new List<GameObject>();
 
+    private int wait1 = 0;
     void Start()
     {
         GenerateRoom(Vector2.zero, 3); // Generate a 1x1 room at the spawn position
@@ -19,24 +27,31 @@ public class MapGenerator : MonoBehaviour
         MarkOccupied(Vector2.zero, 3);
         GenerateMap(numRooms);
     }
+
+    void Update() {
+        if (wait1 == 1) {
+            ReplaceOverlappingWithDoor();
+        } wait1++;
+    }
     void GenerateMap(int roomNum)
     {
 
         Vector2[] directions = { Vector2.up, Vector2.left, Vector2.right, Vector2.down };
 
-        for (int i = 0; i < roomNum; i++)
-        {
+        for (int i = 0; i < roomNum*5; i++) {
             Vector2 randomPosition = roomPositions[Random.Range(0, roomPositions.Count)];
             Vector2 direction = directions[Random.Range(0, directions.Length)];
             int randomSize = roomSizes[Random.Range(0, roomSizes.Length)];
             Vector2 newPosition = randomPosition + direction * randomSize;
-
-            // Check if the new position overlaps with any existing room or spawn position
-            if (!IsOverlap(newPosition, randomSize) && IsAdjacentToRoom(newPosition, randomSize))
-            {
-                GenerateRoom(newPosition, randomSize);
-                MarkOccupied(newPosition, randomSize);
-                roomPositions.Add(newPosition);
+            if (!IsOverlap(newPosition, randomSize)) {
+                if (IsAdjacentToRoom(newPosition, randomSize)) {
+                    GenerateRoom(newPosition, randomSize);
+                    MarkOccupied(newPosition, randomSize);
+                    roomPositions.Add(newPosition);
+                }
+            }
+            if (roomPositions.Count >= roomNum) {
+                break;
             }
         }
     }
@@ -68,6 +83,17 @@ public class MapGenerator : MonoBehaviour
                 Vector2 checkPosition = new Vector2(x, y);
                 if (roomPositions.Contains(checkPosition))
                 {
+                    // // Update adjacency map
+                    // if (!adjacencyMap.ContainsKey(checkPosition))
+                    // {
+                    //     adjacencyMap[checkPosition] = new List<Vector2>();
+                    // }
+                    // adjacencyMap[checkPosition].Add(position);
+                    // if (!adjacencyMap.ContainsKey(position))
+                    // {
+                    //     adjacencyMap[position] = new List<Vector2>();
+                    // }
+                    // adjacencyMap[position].Add(checkPosition);
                     return true; // Adjacent
                 }
             }
@@ -86,6 +112,31 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+    
+    void ReplaceOverlappingWithDoor()
+    {
+        Debug.Log(walls.Count);
+        for (int i = 0; i < walls.Count; i++)
+        {
+            for (int j = i + 1; j < walls.Count; j++)
+            {
+                Debug.Log("deleting");
+                Collider2D colliderA = walls[i].GetComponent<Collider2D>();
+                Collider2D colliderB = walls[j].GetComponent<Collider2D>();
+
+                if (colliderA != null && colliderB != null && colliderA.bounds.Intersects(colliderB.bounds))
+                {
+                    Vector2 overlapCenter = (colliderA.bounds.center + colliderB.bounds.center) / 2f;
+
+                    GameObject door = Instantiate(doorPrefab, overlapCenter, walls[i].transform.rotation);
+                    // You might want to do additional setup for the door prefab here
+                    Destroy(walls[i]);
+                    Destroy(walls[j]);
+                }
+            }
+        }
+    }
+
 
     void GenerateRoom(Vector2 position, int size) {
         GameObject room = Instantiate(roomPrefab);

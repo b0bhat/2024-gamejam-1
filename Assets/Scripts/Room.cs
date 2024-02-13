@@ -64,6 +64,8 @@ public class Room : MonoBehaviour
                 doorScript.doorDirection = rotateDegree;
                 Doors.Add(wall);
             }
+            MapGenerator.instance.walls.Add(wall);
+            //Debug.Log(MapGenerator.instance.walls.Count);
             wall.transform.Rotate(Vector3.forward, rotateDegree);
         }
     }

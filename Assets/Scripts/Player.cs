@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region Singleton
+    public static Player instance;
+    void Awake() {
+        instance = this;
+    }
+    #endregion
 
     public float moveSpeed = 0.5f;
     public Rigidbody2D rb;
