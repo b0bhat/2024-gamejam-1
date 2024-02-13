@@ -15,11 +15,10 @@ public class MapGenerator : MonoBehaviour
     public List<Vector2> roomPositions = new List<Vector2>();
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
-    private int[] roomSizes = { 2, 3, 4, 5 };
+    private int[] roomSizes = { 2, 3, 4, 5, 6, 7, 8};
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();
-
-    private int wait1 = 0;
+    
     void Start()
     {
         GenerateRoom(Vector2.zero, 3); // Generate a 1x1 room at the spawn position
@@ -28,11 +27,11 @@ public class MapGenerator : MonoBehaviour
         GenerateMap(numRooms);
     }
 
-    void Update() {
-        if (wait1 == 1) {
-            ReplaceOverlappingWithDoor();
-        } wait1++;
-    }
+    // void Update() {
+    //     if (wait1 == 1) {
+    //         ReplaceOverlappingWithDoor();
+    //     } wait1++;
+    // }
     void GenerateMap(int roomNum)
     {
 
@@ -112,31 +111,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
-    void ReplaceOverlappingWithDoor()
-    {
-        Debug.Log(walls.Count);
-        for (int i = 0; i < walls.Count; i++)
-        {
-            for (int j = i + 1; j < walls.Count; j++)
-            {
-                Debug.Log("deleting");
-                Collider2D colliderA = walls[i].GetComponent<Collider2D>();
-                Collider2D colliderB = walls[j].GetComponent<Collider2D>();
-
-                if (colliderA != null && colliderB != null && colliderA.bounds.Intersects(colliderB.bounds))
-                {
-                    Vector2 overlapCenter = (colliderA.bounds.center + colliderB.bounds.center) / 2f;
-
-                    GameObject door = Instantiate(doorPrefab, overlapCenter, walls[i].transform.rotation);
-                    // You might want to do additional setup for the door prefab here
-                    Destroy(walls[i]);
-                    Destroy(walls[j]);
-                }
-            }
-        }
-    }
-
 
     void GenerateRoom(Vector2 position, int size) {
         GameObject room = Instantiate(roomPrefab);

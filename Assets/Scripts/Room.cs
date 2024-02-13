@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,19 @@ public class Room : MonoBehaviour
     private int numDoors;
     public List<GameObject> Doors;
     public float enterDoorRotation = 10;
+    public bool door_generated = false;
+
+    public struct WallPair {
+        public GameObject thisWall;
+        public GameObject otherWall;
+        public Vector2 position;
+
+        public WallPair(GameObject thisWall, GameObject otherWall, Vector2 position) {
+            this.thisWall = thisWall;
+            this.otherWall = otherWall;
+            this.position = position;
+        }
+    }
 
     void Start()
     {
@@ -26,7 +40,7 @@ public class Room : MonoBehaviour
         height = height_unit*unit_mult;
         position = position_unit*unit_mult;
         // Either 1 or 2
-        numDoors = Random.Range(1, Mathf.Max(width_unit, height_unit)+1);
+        numDoors = UnityEngine.Random.Range(1, Mathf.Max(width_unit, height_unit)+1);
         GenerateRoom();
     }
 
@@ -40,8 +54,9 @@ public class Room : MonoBehaviour
         floor.transform.localScale = new Vector3(width, height, 1);
     }
 
-    void SpawnWall(Vector3 pos, int length, float rotateDegree, bool isHorizontal)
-    {
+    void SpawnWall(Vector3 pos, int length, float rotateDegree, bool isHorizontal) {
+        List<GameObject> thisWalls = new List<GameObject>();
+        List<GameObject> allWalls = MapGenerator.instance.walls;
         for (float i = 0; i < length; i++)
         {
             GameObject prefab;
@@ -64,9 +79,40 @@ public class Room : MonoBehaviour
                 doorScript.doorDirection = rotateDegree;
                 Doors.Add(wall);
             }
-            MapGenerator.instance.walls.Add(wall);
-            //Debug.Log(MapGenerator.instance.walls.Count);
             wall.transform.Rotate(Vector3.forward, rotateDegree);
+            thisWalls.Add(wall);
+            
         }
+        List<WallPair> thisWallsOverlap = new List<WallPair>();
+        foreach (var thisWall in thisWalls.ToArray()) {
+            Collider2D thisCollider = thisWall.GetComponent<Collider2D>();
+            if (thisCollider == null) continue;
+
+            foreach (var otherWall in allWalls.ToArray()) {
+                Collider2D otherCollider = otherWall.GetComponent<Collider2D>();
+                if (otherCollider == null) continue;
+
+                if (thisCollider.bounds.Intersects(otherCollider.bounds)) {
+                    Vector2 overlapCenter = (thisCollider.bounds.center + otherCollider.bounds.center) / 2f;
+                    thisWallsOverlap.Add(new WallPair(thisWall, otherWall, overlapCenter));
+                    // Destroy(thisWall);
+                    // Destroy(otherWall);
+                    // allwalls.Remove(otherWall);
+                    break;
+                }
+            }
+        }
+        if (door_generated == false && thisWallsOverlap.Count > 0) {
+            int middleIndex = thisWallsOverlap.Count / 2;
+            Debug.Log(middleIndex);
+            if (thisWallsOverlap.Count % 2 == 0)
+                middleIndex = UnityEngine.Random.Range(middleIndex - 1, middleIndex + 1);
+            Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, thisWallsOverlap[middleIndex].thisWall.transform.rotation);
+            Destroy(thisWallsOverlap[middleIndex].thisWall);
+            Destroy(thisWallsOverlap[middleIndex].otherWall);
+            door_generated = true;
+        }
+        allWalls.AddRange(thisWalls);
     }
+
 }

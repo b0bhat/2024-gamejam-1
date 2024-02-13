@@ -419,7 +419,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 8998111807603660153, guid: 186f3e14698a65f409fe3f4ca53b29bd, type: 3}
   doorPrefab: {fileID: 6214975354635791003, guid: d0c46f9c80d3d044e87a920370bb1f9a, type: 3}
-  numRooms: 50
+  numRooms: 5
+  roomPositions: []
+  occupiedPositions: []
+  doorPositions: []
+  walls: []
 --- !u!4 &554385079
 Transform:
   m_ObjectHideFlags: 0
