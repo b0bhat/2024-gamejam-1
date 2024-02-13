@@ -1,0 +1,100 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MapGenerator : MonoBehaviour
+{
+    public GameObject roomPrefab;
+    public GameObject doorPrefab;
+    public int numRooms;
+    public List<Vector2> roomPositions = new List<Vector2>();
+    public List<Vector2> occupiedPositions = new List<Vector2>();
+    public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
+    private int[] roomSizes = { 2, 3, 4, 5 };
+    
+
+    void Start()
+    {
+        GenerateRoom(Vector2.zero, 3); // Generate a 1x1 room at the spawn position
+        roomPositions.Add(Vector2.zero);
+        MarkOccupied(Vector2.zero, 3);
+        GenerateMap(numRooms);
+    }
+    void GenerateMap(int roomNum)
+    {
+
+        Vector2[] directions = { Vector2.up, Vector2.left, Vector2.right, Vector2.down };
+
+        for (int i = 0; i < roomNum; i++)
+        {
+            Vector2 randomPosition = roomPositions[Random.Range(0, roomPositions.Count)];
+            Vector2 direction = directions[Random.Range(0, directions.Length)];
+            int randomSize = roomSizes[Random.Range(0, roomSizes.Length)];
+            Vector2 newPosition = randomPosition + direction * randomSize;
+
+            // Check if the new position overlaps with any existing room or spawn position
+            if (!IsOverlap(newPosition, randomSize) && IsAdjacentToRoom(newPosition, randomSize))
+            {
+                GenerateRoom(newPosition, randomSize);
+                MarkOccupied(newPosition, randomSize);
+                roomPositions.Add(newPosition);
+            }
+        }
+    }
+
+    bool IsOverlap(Vector2 position, int size)
+    {
+        // Check if any part of the new room overlaps with existing rooms or occupied positions
+        for (int x = (int)position.x; x < position.x + size; x++)
+        {
+            for (int y = (int)position.y; y < position.y + size; y++)
+            {
+                Vector2 checkPosition = new Vector2(x, y);
+                if (roomPositions.Contains(checkPosition) || occupiedPositions.Contains(checkPosition))
+                {
+                    return true; // Overlaps
+                }
+            }
+        }
+        return false; // No overlap
+    }
+
+    bool IsAdjacentToRoom(Vector2 position, int size)
+    {
+        // Check if any part of the new room is adjacent to an existing room
+        for (int x = (int)position.x - 1; x < position.x + size + 1; x++)
+        {
+            for (int y = (int)position.y - 1; y < position.y + size + 1; y++)
+            {
+                Vector2 checkPosition = new Vector2(x, y);
+                if (roomPositions.Contains(checkPosition))
+                {
+                    return true; // Adjacent
+                }
+            }
+        }
+        return false; // Not adjacent
+    }
+
+    void MarkOccupied(Vector2 position, int size)
+    {
+        // Mark all squares occupied by the new room
+        for (int x = (int)position.x; x < position.x + size; x++)
+        {
+            for (int y = (int)position.y; y < position.y + size; y++)
+            {
+                occupiedPositions.Add(new Vector2(x, y));
+            }
+        }
+    }
+
+    void GenerateRoom(Vector2 position, int size) {
+        GameObject room = Instantiate(roomPrefab);
+        Room roomScript = room.GetComponent<Room>();
+        roomScript.position_unit = position;
+        roomScript.width_unit = size;
+        roomScript.height_unit = size;
+        roomScript.unit_mult = 1;
+    }
+
+    // Instantiate(doorPrefab, checkPosition, Quaternion.identity);
+}

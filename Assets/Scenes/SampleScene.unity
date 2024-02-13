@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 142356510}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.421, y: 0.483, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -388,6 +388,53 @@ MonoBehaviour:
   target: {fileID: 142356512}
   smoothSpeed: 0.125
   offset: {x: 0, y: 0, z: -5}
+--- !u!1 &554385077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554385079}
+  - component: {fileID: 554385078}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &554385078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554385077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313d117b94408de48a00ca9312475c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPrefab: {fileID: 8998111807603660153, guid: 186f3e14698a65f409fe3f4ca53b29bd, type: 3}
+  doorPrefab: {fileID: 6214975354635791003, guid: d0c46f9c80d3d044e87a920370bb1f9a, type: 3}
+  numRooms: 50
+--- !u!4 &554385079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554385077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +472,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 0000000041cab8a2c131c51a
+  m_ApplyToSortingLayers: 0000000041cab8a2c131c51a2959b9fd
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -486,7 +533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1364039375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,13 +546,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd349ec09245c2648a8a8b54637fc7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
+  unit_mult: 3
+  position_unit: {x: -1, y: -1}
   wallPrefab: {fileID: 3987221320285900339, guid: 6915e8e6451ac574bb3ea70a9d86c19b, type: 3}
   floorPrefab: {fileID: 6381926628011954353, guid: ca68f9aca3fe1d64aa427e2ca61a5982, type: 3}
   doorPrefab: {fileID: 6214975354635791003, guid: d0c46f9c80d3d044e87a920370bb1f9a, type: 3}
-  width_unit: 2
+  width_unit: 1
   height_unit: 1
   startRoom: 0
+  Doors: []
+  enterDoorRotation: 10
 --- !u!4 &1364039376
 Transform:
   m_ObjectHideFlags: 0
@@ -592,7 +642,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1564947903
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -676,7 +726,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1564947903
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -697,3 +747,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1364039376}
   - {fileID: 142356512}
+  - {fileID: 554385079}

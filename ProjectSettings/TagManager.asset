@@ -17,7 +17,7 @@ TagManager:
   - Player
   - 
   - 
-  - 
+  - Door
   - Wall
   - 
   - Floor
@@ -45,6 +45,9 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 449130945
+    locked: 0
+  - name: Door
+    uniqueID: 4256782633
     locked: 0
   - name: Player
     uniqueID: 2730019393
