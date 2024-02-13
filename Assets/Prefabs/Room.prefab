@@ -54,9 +54,11 @@ MonoBehaviour:
   height_unit: 1
   startRoom: 0
   Doors: []
+  Walls: []
   enterDoorRotation: 10
   door_generated: 0
   hidden: 1
+  playerInRoom: 0
 --- !u!61 &5254921096519980234
 BoxCollider2D:
   m_ObjectHideFlags: 0

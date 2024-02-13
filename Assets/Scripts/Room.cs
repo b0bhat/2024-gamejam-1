@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,9 +18,11 @@ public class Room : MonoBehaviour
     private int numDoorsLimit;
     private int numDoors;
     public List<GameObject> Doors;
+    public List<GameObject> Walls;
     public float enterDoorRotation = 10;
     public bool door_generated = false;
     public bool hidden = true;
+    public bool playerInRoom = false;
 
     public struct WallPair {
         public GameObject thisWall;
@@ -35,21 +36,41 @@ public class Room : MonoBehaviour
         }
     }
 
-    void Start()
-    {
+    void Start() {
         width = width_unit*unit_mult;
         height = height_unit*unit_mult;
-        position = position_unit*unit_mult;
+        position = transform.position;
         // Either 1 or 2
         numDoors = UnityEngine.Random.Range(1, Mathf.Max(width_unit, height_unit)+1);
-        GenerateRoom();
         BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
         if (boxCollider != null) {
-            boxCollider.offset = new Vector2(position.x+width/2f, position.y+height/2f);
+            boxCollider.offset = new Vector2(width/2f, height/2f);
             boxCollider.size = new Vector2(width, height);
         }
+        GenerateRoom();
         if (hidden == true) {
             HideRoom();
+        }
+        foreach (GameObject wall in Walls.ToArray()) {
+            StartCoroutine(SpawnEnemy(wall));
+        }
+    }
+
+    void Update() {
+
+    }
+
+    IEnumerator SpawnEnemy(GameObject wall) {
+        while (true) {
+            if (playerInRoom) {
+                Debug.Log("spawn");
+                Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
+                EnemyManager.instance.SpawnEnemy(spawnPosition);
+                yield return new WaitForSeconds(Random.Range(4.0f, 8.0f));
+            }
+            else {
+                yield return new WaitForSeconds(1.0f);
+            }
         }
     }
 
@@ -121,6 +142,7 @@ public class Room : MonoBehaviour
             door_generated = true;
         }
         allWalls.AddRange(thisWalls);
+        Walls.AddRange(thisWalls);
     }
 
     public void HideRoom() {
@@ -146,6 +168,14 @@ public class Room : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             ShowRoom();
+            playerInRoom = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            Debug.Log("exited");
+            playerInRoom = false;
         }
     }
 

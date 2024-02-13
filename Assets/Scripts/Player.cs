@@ -17,25 +17,32 @@ public class Player : MonoBehaviour
 
     public int score = 0;
     public int money = 0; // currency
+    public int health = 0;
 
     Vector2 movement;
     Vector2 mousePos;
 
     GameObject score_text;
     GameObject money_text;
+    GameObject health_text;
 
     void Start() {
         score_text = GameObject.FindWithTag("Score");
         money_text = GameObject.FindWithTag("Money");
+        health_text = GameObject.FindWithTag("Health");
     }
 
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        if (movement.magnitude > 1) {
+            movement.Normalize();
+        }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         score_text.GetComponent<TextMeshProUGUI>().text = "SCORE: " + score.ToString();
-        money_text.GetComponent<TextMeshProUGUI>().text = score.ToString() + " Lingons";
+        money_text.GetComponent<TextMeshProUGUI>().text = money.ToString() + " Lingons";
+        health_text.GetComponent<TextMeshProUGUI>().text = "HEALTH: " + health.ToString();
     }
 
     void FixedUpdate()

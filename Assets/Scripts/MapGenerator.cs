@@ -113,7 +113,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     void GenerateRoom(Vector2 position, int size, bool start=false) {
-        GameObject room = Instantiate(roomPrefab);
+        GameObject room = Instantiate(roomPrefab, position, Quaternion.identity);
         Room roomScript = room.GetComponent<Room>();
         roomScript.position_unit = position;
         roomScript.width_unit = size;
