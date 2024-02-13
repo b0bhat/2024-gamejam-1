@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -14,14 +15,27 @@ public class Player : MonoBehaviour
     public float moveSpeed = 0.5f;
     public Rigidbody2D rb;
 
+    public int score = 0;
+    public int money = 0; // currency
+
     Vector2 movement;
     Vector2 mousePos;
+
+    GameObject score_text;
+    GameObject money_text;
+
+    void Start() {
+        score_text = GameObject.FindWithTag("Score");
+        money_text = GameObject.FindWithTag("Money");
+    }
 
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        score_text.GetComponent<TextMeshProUGUI>().text = "SCORE: " + score.ToString();
+        money_text.GetComponent<TextMeshProUGUI>().text = score.ToString() + " Lingons";
     }
 
     void FixedUpdate()
