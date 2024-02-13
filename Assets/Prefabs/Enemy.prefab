@@ -195,3 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.2
   damageAmount: 10
+  fadeInDuration: 2

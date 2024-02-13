@@ -15,15 +15,15 @@ public class MapGenerator : MonoBehaviour
     public List<Vector2> roomPositions = new List<Vector2>();
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
-    private int[] roomSizes = { 2, 3, 4, 5, 6, 7, 8};
+    private int[] roomSizes = {3, 4, 5, 6, 7, 8};
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();
     
     void Start()
     {
-        GenerateRoom(Vector2.zero, 3, true); // Generate a 1x1 room at the spawn position
+        GenerateRoom(Vector2.zero, 4, true); // Generate a 1x1 room at the spawn position
         roomPositions.Add(Vector2.zero);
-        MarkOccupied(Vector2.zero, 3);
+        MarkOccupied(Vector2.zero, 4);
         GenerateMap(numRooms);
     }
 

@@ -66,7 +66,7 @@ public class Room : MonoBehaviour
                 Debug.Log("spawn");
                 Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
                 EnemyManager.instance.SpawnEnemy(spawnPosition);
-                yield return new WaitForSeconds(Random.Range(4.0f, 8.0f));
+                yield return new WaitForSeconds(Random.Range(4.0f, 10.0f));
             }
             else {
                 yield return new WaitForSeconds(1.0f);
