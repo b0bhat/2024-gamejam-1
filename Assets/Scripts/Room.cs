@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     public bool door_generated = false;
     public bool hidden = true;
     public bool playerInRoom = false;
+    public bool firstFrame = true;
 
     public struct WallPair {
         public GameObject thisWall;
@@ -51,22 +52,24 @@ public class Room : MonoBehaviour
         if (hidden == true) {
             HideRoom();
         }
-        foreach (GameObject wall in Walls.ToArray()) {
-            StartCoroutine(SpawnEnemy(wall));
-        }
     }
 
     void Update() {
+        if (firstFrame) {
+            firstFrame = false;
+            foreach (GameObject wall in Walls.ToArray()) {
+                StartCoroutine(SpawnEnemy(wall));
+            }
+        }
 
     }
 
     IEnumerator SpawnEnemy(GameObject wall) {
         while (true) {
-            if (wall is null) {
+            if (ReferenceEquals(wall, null) || wall.Equals(null)){
                 yield break;
             }
             if (playerInRoom) {
-                //Debug.Log("spawn");
                 Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
                 EnemyManager.instance.SpawnEnemy(spawnPosition);
                 yield return new WaitForSeconds(Random.Range(4.0f, 10.0f));
