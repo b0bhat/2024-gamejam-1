@@ -9,6 +9,7 @@ TagManager:
   - Score
   - Money
   - Health
+  - UI
   layers:
   - Default
   - TransparentFX

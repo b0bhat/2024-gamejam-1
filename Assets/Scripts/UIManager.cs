@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
         _moneyText.text = "Money: " + 0;
         _gameOver.SetActive(false);
         _gameOverText.gameObject.SetActive(false);
+        _healthSlider = GameObject.FindWithTag("Health").GetComponent<Slider>();
     }
 
     public void UpdateScoreText(int score)

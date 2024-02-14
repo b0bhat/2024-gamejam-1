@@ -94,7 +94,7 @@ public class BulletParticle : MonoBehaviour
                 alreadyPen++;
                 alreadyHit.Add(other);
                 other.GetComponent<Rigidbody2D>().AddForce(direction * force, ForceMode2D.Impulse);
-                //enemy.TakeDamage(damage*Random.Range(0.8f,1.2f), rb.velocity * 0.2f*force);
+                enemy.TakeDamage(damage*Random.Range(0.8f,1.2f), rb.velocity * 0.2f*force);
                 if (alreadyPen >= penetration) {
                     Destroy(gameObject);
                 }

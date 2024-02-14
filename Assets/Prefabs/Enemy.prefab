@@ -175,9 +175,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 124157268248599905}
+  - component: {fileID: 4116881775291170767}
   - component: {fileID: 1491574623935010223}
   - component: {fileID: 8507686875400842517}
-  - component: {fileID: 4116881775291170767}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -202,6 +202,25 @@ Transform:
   - {fileID: 2843717908488548222}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4116881775291170767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775386531751435792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f0113bcefe9d44c8194eafb957b968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.15
+  damageAmount: 10
+  health: 10
+  maxHealth: 10
+  attackCooldown: 0.5
+  fadeInDuration: 2
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!50 &1491574623935010223
 Rigidbody2D:
   serializedVersion: 4
@@ -264,18 +283,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4116881775291170767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8775386531751435792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35f0113bcefe9d44c8194eafb957b968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.2
-  damageAmount: 10
-  fadeInDuration: 2

@@ -18,23 +18,24 @@ public class Player : MonoBehaviour
     public int score = 0;
     public int money = 0; // currency
     public int maxHealth = 100;
-
     private int health;
 
+    private Color originalColor;
+    public Color damagedColor = new Color(1,0,0,1);
+    public SpriteRenderer spriteRenderer;
     Vector2 movement;
     Vector2 mousePos;
 
-    private UIManager _UIManager;
+    public UIManager _UIManager;
 
     public List<AttackScript> attacks = new List<AttackScript>();
 
     void Start() {
-        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        if (_UIManager == null)
-        {
+        _UIManager = GameObject.FindWithTag("UI").GetComponent<UIManager>();
+        if (_UIManager == null){
             Debug.LogError("UI Manager is NULL!");
         }
-
+        originalColor = spriteRenderer.color;
         health = maxHealth;
         _UIManager.UpdateHealthSlider(health);
     }
@@ -49,10 +50,10 @@ public class Player : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         //test health system
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             Damage(10);
         }
+        //Debug.Log(_UIManager);
     }
 
     void FixedUpdate()
@@ -69,21 +70,29 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            rb.velocity = Vector2.zero;
-        }
+        // if (collision.gameObject.CompareTag("Wall")){
+        //     rb.velocity = Vector2.zero;
+        // }
     }
 
-    public void Damage(int damage) 
-    {
+    public void Damage(int damage) {
         health -= damage;
-        _UIManager.UpdateHealthSlider(health);
-        if (health <= 0)
-        {
+        StartCoroutine(DamageFlash());
+        if (_UIManager != null) {
+            _UIManager.UpdateHealthSlider(health);
+        } else {
+            Debug.LogWarning("_UIManager is null in Damage method!");
+        }
+        if (health <= 0) {
             _UIManager.GameOverSequence();
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator DamageFlash() {
+        spriteRenderer.color = damagedColor;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = originalColor;
     }
 
     public void Heal(int amount)
