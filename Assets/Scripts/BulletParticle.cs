@@ -20,6 +20,7 @@ public class BulletParticle : MonoBehaviour
     Color bulletColor;
     [SerializeField] GameObject capsule;
     Vector3 lastVel;
+    Vector2 direction;
 
     List<GameObject> alreadyHit = new List<GameObject>();
 
@@ -71,23 +72,28 @@ public class BulletParticle : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Vector2 direction = rb.velocity.normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = rotation;
     }
 
     void Update() {
-        lastVel = rb.velocity;
+        // lastVel = rb.velocity;
+        // direction = rb.velocity.normalized;
+        // transform.Translate(direction * bulletSpeed * Time.deltaTime);
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        // transform.rotation = rotation;
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
         GameObject other = collider.gameObject;
+        if (other.gameObject.CompareTag("Wall")) {
+            Destroy(gameObject);
+        }
         if(other.TryGetComponent(out Enemy enemy)) {
             Instantiate(hit, transform.position, transform.rotation);
             if (!alreadyHit.Contains(other)) {
                 alreadyPen++;
                 alreadyHit.Add(other);
+                other.GetComponent<Rigidbody2D>().AddForce(direction * force, ForceMode2D.Impulse);
                 //enemy.TakeDamage(damage*Random.Range(0.8f,1.2f), rb.velocity * 0.2f*force);
                 if (alreadyPen >= penetration) {
                     Destroy(gameObject);
@@ -95,5 +101,15 @@ public class BulletParticle : MonoBehaviour
             }
         }
     }
+
+    // private void Bounce() {
+    //     if (curBounce < bounceTimes) {
+    //         curBounce++;
+    //         direction = Vector2.Reflect(direction, transform.right);
+    //     }
+    //     else {
+    //         Destroy(gameObject);
+    //     }
+    // }
 
 }
