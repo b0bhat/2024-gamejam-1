@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     public float moveSpeed = 0.5f;
     public Rigidbody2D rb;
+    public GameObject player;
 
     public int score = 0;
     public int money = 0; // currency
@@ -59,7 +60,8 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         Vector2 lookDirection = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
+        //rb.rotation = angle;
+        player.transform.rotation = Quaternion.Euler(0, 0, angle);
         foreach (AttackScript attack in attacks) {
             attack.Check(true);
         }
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             _UIManager.GameOverSequence();
+            Destroy(this.gameObject);
         }
     }
 
