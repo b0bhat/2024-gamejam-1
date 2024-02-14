@@ -62,8 +62,11 @@ public class Room : MonoBehaviour
 
     IEnumerator SpawnEnemy(GameObject wall) {
         while (true) {
+            if (wall is null) {
+                yield break;
+            }
             if (playerInRoom) {
-                Debug.Log("spawn");
+                //Debug.Log("spawn");
                 Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
                 EnemyManager.instance.SpawnEnemy(spawnPosition);
                 yield return new WaitForSeconds(Random.Range(4.0f, 10.0f));
@@ -174,7 +177,7 @@ public class Room : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            Debug.Log("exited");
+            //Debug.Log("exited");
             playerInRoom = false;
         }
     }

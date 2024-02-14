@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     GameObject money_text;
     GameObject health_text;
 
+    public List<AttackScript> attacks = new List<AttackScript>();
+
     void Start() {
         score_text = GameObject.FindWithTag("Score");
         money_text = GameObject.FindWithTag("Money");
@@ -51,6 +53,9 @@ public class Player : MonoBehaviour
         Vector2 lookDirection = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;
+        foreach (AttackScript attack in attacks) {
+            attack.Check(true);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

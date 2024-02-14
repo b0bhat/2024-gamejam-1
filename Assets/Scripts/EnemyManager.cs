@@ -11,6 +11,8 @@ public class EnemyManager : MonoBehaviour {
     }
     #endregion
 
+    List<GameObject> Enemies = new List<GameObject>();
+
     public GameObject enemyPrefab;
 
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class EnemyManager : MonoBehaviour {
     }
 
     public void SpawnEnemy(Vector2 position) {
-        Instantiate(enemyPrefab, position, Quaternion.identity, transform);
+        GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
+        Enemies.Add(enemy);
     }
 }
