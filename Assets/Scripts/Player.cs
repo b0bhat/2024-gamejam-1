@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -17,21 +16,26 @@ public class Player : MonoBehaviour
 
     public int score = 0;
     public int money = 0; // currency
-    public int health = 0;
+    public int maxHealth = 100;
+
+    private int health;
 
     Vector2 movement;
     Vector2 mousePos;
 
-    GameObject score_text;
-    GameObject money_text;
-    GameObject health_text;
+    private UIManager _UIManager;
 
     public List<AttackScript> attacks = new List<AttackScript>();
 
     void Start() {
-        score_text = GameObject.FindWithTag("Score");
-        money_text = GameObject.FindWithTag("Money");
-        health_text = GameObject.FindWithTag("Health");
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_UIManager == null)
+        {
+            Debug.LogError("UI Manager is NULL!");
+        }
+
+        health = maxHealth;
+        _UIManager.UpdateHealthSlider(health);
     }
 
     void Update()
@@ -42,9 +46,12 @@ public class Player : MonoBehaviour
             movement.Normalize();
         }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        score_text.GetComponent<TextMeshProUGUI>().text = "SCORE: " + score.ToString();
-        money_text.GetComponent<TextMeshProUGUI>().text = money.ToString() + " Lingons";
-        health_text.GetComponent<TextMeshProUGUI>().text = "HEALTH: " + health.ToString();
+
+        //test health system
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Damage(10);
+        }
     }
 
     void FixedUpdate()
@@ -66,4 +73,41 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Damage(int damage) 
+    {
+        health -= damage;
+        _UIManager.UpdateHealthSlider(health);
+        if (health <= 0)
+        {
+            _UIManager.GameOverSequence();
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        health += amount;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        _UIManager.UpdateHealthSlider(health);
+    }
+
+    public void ScoreAdd(int points)
+    {
+        score += points;
+        _UIManager.UpdateScoreText(score);
+    }
+
+    public void MoneyAdd(int points)
+    {
+        money += points;
+        _UIManager.UpdateMoneyText(money);
+    }
+
+    public void MoneySpend(int points)
+    {
+        money -= points;
+        _UIManager.UpdateMoneyText(money);
+    }
 }
