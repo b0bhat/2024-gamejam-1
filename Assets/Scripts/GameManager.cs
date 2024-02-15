@@ -6,14 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _pauseUI;
+    public  GameObject _pauseUI;
     [SerializeField]
     private GameObject _pauseText;
-
-    void Awake() {
-        _pauseUI = GameObject.Find("pause_button");
-        _pauseText = GameObject.Find("pause_text");
-    }
 
     // Update is called once per frame
     void Update()

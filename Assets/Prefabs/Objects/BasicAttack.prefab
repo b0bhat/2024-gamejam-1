@@ -49,7 +49,7 @@ MonoBehaviour:
   burstTime: 1
   timeBetweenBurst: 5
   recoil: 1
-  force: 5
+  force: 1
   spread: 5
   weaponType: 0
   damage: 4
