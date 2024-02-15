@@ -9,6 +9,14 @@ public class GameManager : MonoBehaviour
     public  GameObject _pauseUI;
     [SerializeField]
     private GameObject _pauseText;
+    [SerializeField]
+    private GameObject _menuUI;
+
+    private void Start()
+    {
+        Time.timeScale = 0;
+        _menuUI.SetActive(true);
+    }
 
     // Update is called once per frame
     void Update()
@@ -43,11 +51,12 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        if (Time.timeScale != 1)
-        {
-            Time.timeScale = 1;
-        }
-
         SceneManager.LoadScene(0);  // game scene
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1;
+        _menuUI.SetActive(false);
     }
 }

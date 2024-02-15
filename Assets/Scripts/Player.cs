@@ -48,12 +48,6 @@ public class Player : MonoBehaviour
             movement.Normalize();
         }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        //test health system
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Damage(10);
-        }
-        //Debug.Log(_UIManager);
     }
 
     void FixedUpdate()
@@ -61,7 +55,6 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         Vector2 lookDirection = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-        //rb.rotation = angle;
         player.transform.rotation = Quaternion.Euler(0, 0, angle);
         foreach (AttackScript attack in attacks) {
             attack.Check(true);
