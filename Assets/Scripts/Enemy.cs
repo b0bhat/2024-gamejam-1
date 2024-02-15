@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public int damageAmount = 10;
     public float health = 10;
     public float maxHealth = 10;
-    public float attackCooldown = 0.5f; // shouldn't change as enemies get stronger tbh
+    public float attackCooldown = 0.1f; // shouldn't change as enemies get stronger tbh
 
     public float fadeInDuration = 1.0f;
     private SpriteRenderer spriteRenderer;
@@ -16,7 +16,9 @@ public class Enemy : MonoBehaviour
     public Color damagedColor = new Color(1,0,0,1);
 
     private bool canDamage = true;
+    private bool damageFlashing = false;
     public GameObject moneyPrefab;
+    public GameObject deadPrefab;
 
     private Player player;
     private Rigidbody2D rb;
@@ -36,20 +38,24 @@ public class Enemy : MonoBehaviour
     {
         float elapsedTime = 0.0f;
         while (elapsedTime < fadeInDuration) {
-            float alpha = Mathf.Lerp(0, originalColor.a, elapsedTime / fadeInDuration);
-            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            if (!damageFlashing) {
+                float alpha = Mathf.Lerp(0, originalColor.a, elapsedTime / fadeInDuration);
+                spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         spriteRenderer.color = originalColor;
     }
 
-    void Update()
-    {
+    void FixedUpdate() {
         if (player != null) {
             Vector2 direction = (player.gameObject.transform.position - transform.position).normalized;
             rb.AddForce(direction * speed, ForceMode2D.Force);
         }
+    }
+
+    void Update() {
         if (health <= 0) {
             Die();
         }
@@ -61,11 +67,13 @@ public class Enemy : MonoBehaviour
     }
 
     IEnumerator DamageFlash() {
+        damageFlashing = true;
         // Capsule.GetComponent<MeshRenderer>().material = flashMat;
         spriteRenderer.color = damagedColor;
         yield return new WaitForSeconds(0.05f);
         // Capsule.GetComponent<MeshRenderer>().material = origMat;
         spriteRenderer.color = originalColor;
+        damageFlashing = false;
     }
 
     public void Hurt(float damage) {
@@ -81,15 +89,17 @@ public class Enemy : MonoBehaviour
     }
 
     void Die() {
-        var money = Instantiate(moneyPrefab);
+        GameObject money = Instantiate(moneyPrefab);
+        GameObject corpse = Instantiate(deadPrefab);
         money.transform.position = transform.position;
+        corpse.transform.position = transform.position;
         if (attackCoroutine != null) {
             StopCoroutine(attackCoroutine);
         }
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
+    void OnCollisionStay2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Player") && canDamage) {
             attackCoroutine = StartCoroutine(AttackPlayerWithDelay());
         }

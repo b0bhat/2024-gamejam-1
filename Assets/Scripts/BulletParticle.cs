@@ -85,7 +85,7 @@ public class BulletParticle : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider) {
         GameObject other = collider.gameObject;
-        if (other.gameObject.CompareTag("Wall")) {
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) {
             Destroy(gameObject);
         }
         if(other.TryGetComponent(out Enemy enemy)) {

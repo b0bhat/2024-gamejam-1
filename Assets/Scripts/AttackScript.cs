@@ -74,6 +74,7 @@ public class AttackScript : MonoBehaviour
     // }
 
     public void Fire() {
+        CameraController.instance.ShakeCamera(0.05f, force*0.01f);
         for (int i = 1; i <= projInShot; i++) {
             var inc = angleBurst / projInShot;
             var angle = -angleBurst / 2f + (inc / 2) + (inc * (i - 1));

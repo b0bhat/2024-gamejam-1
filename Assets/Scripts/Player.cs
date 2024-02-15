@@ -38,10 +38,10 @@ public class Player : MonoBehaviour
         originalColor = spriteRenderer.color;
         health = maxHealth;
         _UIManager.UpdateHealthSlider(health);
+        StartCoroutine(IncrementScore());
     }
 
-    void Update()
-    {
+    void Update() {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         if (movement.magnitude > 1) {
@@ -61,6 +61,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator IncrementScore()
+    {
+        while (true) {
+            yield return new WaitForSeconds(1f);
+            ScoreAdd(10);
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         // if (collision.gameObject.CompareTag("Wall")){
@@ -70,6 +78,7 @@ public class Player : MonoBehaviour
 
     public void Damage(int damage) {
         health -= damage;
+        CameraController.instance.ShakeCamera(0.15f, 0.05f);
         StartCoroutine(DamageFlash());
         if (_UIManager != null) {
             _UIManager.UpdateHealthSlider(health);
@@ -78,7 +87,7 @@ public class Player : MonoBehaviour
         }
         if (health <= 0) {
             _UIManager.GameOverSequence();
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 

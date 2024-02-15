@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _menuUI;
 
-    private void Start()
-    {
+    private void Start() {
         Time.timeScale = 0;
         _menuUI.SetActive(true);
     }

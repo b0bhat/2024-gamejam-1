@@ -142,7 +142,8 @@ public class Room : MonoBehaviour
             int middleIndex = thisWallsOverlap.Count / 2;
             if (thisWallsOverlap.Count % 2 == 0)
                 middleIndex = UnityEngine.Random.Range(middleIndex - 1, middleIndex + 1);
-            Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, thisWallsOverlap[middleIndex].thisWall.transform.rotation, transform);
+            GameObject door = Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, Quaternion.identity, transform);
+            door.GetComponent<Door>().SetDoorRotation(thisWallsOverlap[middleIndex].thisWall.transform.rotation);
             Destroy(thisWallsOverlap[middleIndex].thisWall);
             Destroy(thisWallsOverlap[middleIndex].otherWall);
             door_generated = true;
@@ -155,8 +156,8 @@ public class Room : MonoBehaviour
         hidden = true;
         foreach (Transform child in transform) {
             SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
-            // if (spriteRenderer != null && !child.CompareTag("Door")) {
-            if (spriteRenderer != null) {
+            if (spriteRenderer != null && !child.CompareTag("Door")) {
+            //if (spriteRenderer != null) {
                 spriteRenderer.renderingLayerMask  = 0;
             }
         }
