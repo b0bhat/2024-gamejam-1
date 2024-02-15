@@ -7,6 +7,9 @@ public class CameraController : MonoBehaviour
     public Transform target;
     public float smoothSpeed = 0.3f;
     public Vector3 offset;
+    void Start() {
+        target = Player.instance.gameObject.transform;
+    }
     void FixedUpdate()
     {
         if (target != null)
