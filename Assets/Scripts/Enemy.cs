@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public Color damagedColor = new Color(1,0,0,1);
 
     private bool canDamage = true;
+    public GameObject moneyPrefab;
 
     private Player player;
     private Rigidbody2D rb;
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
     IEnumerator DamageFlash() {
         // Capsule.GetComponent<MeshRenderer>().material = flashMat;
         spriteRenderer.color = damagedColor;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         // Capsule.GetComponent<MeshRenderer>().material = origMat;
         spriteRenderer.color = originalColor;
     }
@@ -80,8 +81,8 @@ public class Enemy : MonoBehaviour
     }
 
     void Die() {
-        // var death = Instantiate(DeathPrefab);
-        // death.transform.position = transform.position;
+        var money = Instantiate(moneyPrefab);
+        money.transform.position = transform.position;
         if (attackCoroutine != null) {
             StopCoroutine(attackCoroutine);
         }

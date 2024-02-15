@@ -49,7 +49,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.98
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000c131c51a2959b9fd41cab8a2
@@ -221,6 +221,7 @@ MonoBehaviour:
   attackCooldown: 0.5
   fadeInDuration: 2
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  moneyPrefab: {fileID: 5205591416328645734, guid: 606d71dc42af0674484f73ee76f09fde, type: 3}
 --- !u!50 &1491574623935010223
 Rigidbody2D:
   serializedVersion: 4
