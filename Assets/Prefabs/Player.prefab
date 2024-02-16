@@ -833,7 +833,7 @@ MonoBehaviour:
   maxHealth: 100
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
   spriteRenderer: {fileID: 39406783438347198}
-  invincible: 0
+  invincible: 1
   _UIManager: {fileID: 0}
   attacks:
   - {fileID: 8750989932127129182}
