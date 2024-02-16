@@ -797,6 +797,10 @@ MonoBehaviour:
   money: 0
   maxHealth: 100
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  normalCharColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  moneyCharColor: {r: 0.8490566, g: 0.756942, b: 0.80299926, a: 1}
+  hurtCharColor: {r: 0.7830189, g: 0.08495018, b: 0.08495018, a: 1}
+  deadCharColor: {r: 0.5471698, g: 0.21422213, b: 0.21422213, a: 0.7529412}
   spriteRenderer: {fileID: 39406783438347198}
   invincible: 0
   hitAudio: {fileID: 8300000, guid: b528bca7729ea044e90f99cce0c8f9e1, type: 3}
@@ -804,6 +808,11 @@ MonoBehaviour:
   _UIManager: {fileID: 0}
   attacks:
   - {fileID: 8750989932127129182}
+  faces:
+  - {fileID: 21300000, guid: ea58b118020ca0440848ea59c5057473, type: 3}
+  - {fileID: 21300000, guid: 707123a8a1d259245a30085f92b5ad80, type: 3}
+  - {fileID: 21300000, guid: 720d754e65f530b4787ff321ff66ad4a, type: 3}
+  - {fileID: 21300000, guid: 9e2c63f8e92dbe246add9b4d5df5e5c7, type: 3}
 --- !u!50 &1253388610970022580
 Rigidbody2D:
   serializedVersion: 4

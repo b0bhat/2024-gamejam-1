@@ -7,7 +7,7 @@ public class Money : MonoBehaviour
     public int value = 10;
     private bool pickupStarted = false;
     private Transform playerTransform;
-    //public AudioClip pickupSound;
+    public AudioClip pickupSound;
     private Rigidbody2D rb;
     public float pickupDistance = 0.2f;
 
@@ -40,9 +40,9 @@ public class Money : MonoBehaviour
 
     private void Pickup() {
         Player.instance.MoneyAdd(value);
-        // if (pickupSound != null) {
-        //     AudioSource.PlayClipAtPoint(pickupSound, transform.position);
-        // }
+        if (pickupSound != null) {
+            //AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.1f);
+        }
         Destroy(gameObject);
     }
 }

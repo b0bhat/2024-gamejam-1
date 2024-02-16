@@ -20,8 +20,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _scoreText.text = "Score: " + 0;
-        _moneyText.text = "Money: " + 0;
+        _scoreText.text = "SCORE: " + 0;
+        _moneyText.text = "MONEY: " + 0;
         _gameOver.SetActive(false);
         _gameOverText.gameObject.SetActive(false);
         _healthSlider = GameObject.FindWithTag("Health").GetComponent<Slider>();
@@ -29,11 +29,11 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScoreText(int score)
     {
-        _scoreText.text = "Score: " + score;
+        _scoreText.text = "SCORE: " + score;
     }
     public void UpdateMoneyText(int money)
     {
-        _moneyText.text = "Money: " + money;
+        _moneyText.text = "MONEY: " + money;
     }
 
     public void UpdateHealthSlider(float amount)

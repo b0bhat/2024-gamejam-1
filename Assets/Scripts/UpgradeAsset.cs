@@ -8,7 +8,8 @@ public class UpgradeAsset : ScriptableObject {
     public String assetName = "Upgrade";
     public String attackName= "BasicAttack";
     public int upgradeType = 0;
-    public Texture2D upgradeIcon;
+    public Sprite upgradeIcon;
+    public Color upgradeIconColor;
     // 0 for normal, 1 for ultimate
     public List<Upgrade> upgrades = new List<Upgrade>();
 }

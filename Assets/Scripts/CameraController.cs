@@ -16,10 +16,6 @@ public class CameraController : MonoBehaviour {
     public Vector3 smoothedPosition;
     void Start() {
         target = Player.instance.gameObject.transform;
-        // UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
-        // UnityEngine.Rendering.Universal.ChromaticAberration ChromaticAberration;
-        // profile.TryGet(out ChromaticAberration);
-        // ChromaticAberration.intensity.Override(1f);
     }
 
     void FixedUpdate() {

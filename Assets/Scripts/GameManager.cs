@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     private GameObject _menuUI;
     [SerializeField]
     private GameObject _upgradeUI;
+    private List<GameObject> upgrade_buttons = new();
     [SerializeField]
     private AudioClip battleSong;
     [SerializeField]
@@ -31,10 +34,13 @@ public class GameManager : MonoBehaviour
     public int unlockCost = 100;
     public int doorCost = 200;
     public int doorCostIncrease = 100;
+    bool pauseLock = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
     [SerializeField] List<UpgradeAsset> attackUpgradeList = new();
+
+    UnityEngine.Rendering.Universal.ChromaticAberration ChromaticAberration;
 
     public enum UpgradeType {
         burstTime,
@@ -55,6 +61,14 @@ public class GameManager : MonoBehaviour
     private void Start() {
         Time.timeScale = 0;
         _menuUI.SetActive(true);
+        pauseLock = true;
+        UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
+        profile.TryGet(out ChromaticAberration);
+        ChromaticAberration.intensity.Override(2f);
+        upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button1").gameObject);
+        upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button2").gameObject);
+        upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button3").gameObject);
+
     }
 
     // Update is called once per frame
@@ -85,15 +99,15 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (_pauseUI.activeInHierarchy)
-        {
+        if (_pauseUI.activeInHierarchy) {
             Time.timeScale = 1;
+            pauseLock = false;
             _pauseUI.SetActive(false);
             _pauseText.SetActive(false);
         }
-        else if (!_pauseUI.activeInHierarchy)
-        {
+        else if (!_pauseUI.activeInHierarchy && !pauseLock) {
             Time.timeScale = 0;
+            pauseLock = true;
             _pauseUI.SetActive(true);
             _pauseText.SetActive(true);
         }
@@ -114,12 +128,13 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         _menuUI.SetActive(false);
+        pauseLock = false;
+        ChromaticAberration.intensity.Override(0.2f);
         musicSource.clip = battleSong;
         musicSource.Play();
     }
 
-    public void ShowUpgradeMenu()
-    {
+    public void ShowUpgradeMenu() {
         Time.timeScale = 0;
         List<UpgradeAsset> validUpgrades = new();
         // [TODO] Stat upgrades
@@ -140,18 +155,23 @@ public class GameManager : MonoBehaviour
                 selectedItems.Add(validUpgrades[randomIndex]); 
                 validUpgrades.RemoveAt(randomIndex); // prevent double pick
             }
-            foreach (UpgradeAsset item in selectedItems) {
-                Debug.Log(item.name);
+
+            for (int i=0; i<selectedItems.Count; i++) {
+                upgrade_buttons[i].transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = selectedItems[i].assetName;
+                upgrade_buttons[i].transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = selectedItems[i].upgradeIcon;
+                upgrade_buttons[i].transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>().color = selectedItems[i].upgradeIconColor;
             }
         } else {
             Debug.LogWarning("Less than 3 available upgrades!");
         }
         _upgradeUI.SetActive(true);
+        pauseLock = true;
     }
 
-    public void UpgradeSelected() {
+    public void UpgradeSelected(int num) {
         Time.timeScale = 1;
         _upgradeUI.SetActive(false);
+        pauseLock = false;
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class Player : MonoBehaviour
 
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);
+    public Color normalCharColor = new Color(1,0,0,1);
+    public Color moneyCharColor = new Color(1,0,0,1);
+    public Color hurtCharColor = new Color(1,0,0,1);
+    public Color deadCharColor = new Color(1,0,0,1);
     public SpriteRenderer spriteRenderer;
     Vector2 movement;
     Vector2 mousePos;
@@ -37,6 +42,10 @@ public class Player : MonoBehaviour
 
     public List<AttackScript> attacks = new List<AttackScript>();
 
+    private GameObject _UIchar;
+    private GameObject _UIface;
+    [SerializeField] List<Sprite> faces = new();
+
     void Start() {
         _UIManager = GameObject.FindWithTag("UI").GetComponent<UIManager>();
         if (_UIManager == null){
@@ -47,6 +56,8 @@ public class Player : MonoBehaviour
         health = maxHealth;
         _UIManager.UpdateHealthSlider(health);
         StartCoroutine(IncrementScore());
+        _UIchar = GameObject.Find("UIcharacter");
+        _UIface = GameObject.Find("UIface");
     }
 
     void Update() {
@@ -97,6 +108,11 @@ public class Player : MonoBehaviour
     }
 
     public void Damage(float damage) {
+        if (_UIManager != null) {
+            _UIManager.UpdateHealthSlider(health);
+        } else {
+            Debug.LogWarning("_UIManager is null in Damage method!");
+        }
         if (!invincible) {
             health -= damage;
             if(audioSource.clip != hitAudio)
@@ -104,24 +120,21 @@ public class Player : MonoBehaviour
                 audioSource.clip = hitAudio;
             }
             audioSource.Play();
-        }
-        CameraController.instance.ShakeCamera(0.15f, 0.05f);
-        StartCoroutine(DamageFlash());
-        if (_UIManager != null) {
-            _UIManager.UpdateHealthSlider(health);
-        } else {
-            Debug.LogWarning("_UIManager is null in Damage method!");
+            CameraController.instance.ShakeCamera(0.15f, 0.05f);
+            StartCoroutine(DamageFlash());
         }
         if (health <= 0) {
-            if (audioSource.clip != deathAudio)
-            {
+            if (audioSource.clip != deathAudio){
                 audioSource.clip = deathAudio;
             }
+            UIChar(4);
             audioSource.Play();
             _UIManager.GameOverSequence();
             this.GetComponent<Collider2D>().enabled = false;
             player.SetActive(false);
-            Destroy(this.gameObject, 1.0f);
+            Destroy(this.gameObject, 2.0f);
+        } else {
+            UIChar(3);
         }
     }
 
@@ -150,6 +163,7 @@ public class Player : MonoBehaviour
     public void MoneyAdd(int points)
     {
         money += points;
+        UIChar(2);
         _UIManager.UpdateMoneyText(money);
     }
 
@@ -158,4 +172,25 @@ public class Player : MonoBehaviour
         money -= points;
         _UIManager.UpdateMoneyText(money);
     }
+    private void UIChar(int state) {
+        if (state == 4) {
+            _UIface.GetComponent<Image>().sprite = faces[3];
+            _UIchar.GetComponent<Image>().color = deadCharColor;
+        } else if (state == 3) {
+            StartCoroutine(UICharChange(hurtCharColor, faces[2], 0.5f));
+        } else if (state == 2) {
+            StartCoroutine(UICharChange(moneyCharColor, faces[1], 0.2f));
+        }      
+    }
+
+    IEnumerator UICharChange(Color color, Sprite sprite, float wait) {
+        _UIface.GetComponent<Image>().sprite = sprite;
+        _UIchar.GetComponent<Image>().color = color;
+        yield return new WaitForSeconds(wait);
+        if (player.activeSelf) {
+            _UIface.GetComponent<Image>().sprite = faces[0];
+            _UIchar.GetComponent<Image>().color = normalCharColor;
+        }
+    }
+
 }
