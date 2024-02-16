@@ -7,10 +7,10 @@ public class BulletParticle : MonoBehaviour
     private float damage = 0f;
     private float force = 0f;
     private int penetration;
-    private int bounceTimes;
-    private int curBounce;
+    // private int bounceTimes;
+    // private int curBounce;
     private float bulletSpeed;
-    bool isBounce = false;
+    // bool isBounce = false;
 
     public GameObject hit;
     Rigidbody2D rb;
@@ -33,19 +33,19 @@ public class BulletParticle : MonoBehaviour
         weaponType = type;
     }
 
-    void StopBounce() {
-        isBounce = false;
-    }
+    // void StopBounce() {
+    //     isBounce = false;
+    // }
 
-    public void SetWeapon(float dmg, float bulletForce, int pen, Color color, int bounce, float speed) {
+    public void SetWeapon(float dmg, float bulletForce, int pen, Color color, float speed) {
         damage = dmg;
         force = bulletForce;
         penetration = pen;
         bulletColor = color;
         bulletSpeed = speed;
 
-        bounceTimes = bounce;
-        curBounce = bounce;
+        // bounceTimes = bounce;
+        // curBounce = bounce;
 
         // var originalMat =  capsule.gameObject.GetComponent<MeshRenderer>().material;
         // Material mat = Instantiate(originalMat as Material);
@@ -56,19 +56,19 @@ public class BulletParticle : MonoBehaviour
     // }
     }
     void OnCollisionEnter2D(Collision2D collision) {
-        if (curBounce >= 1 || isBounce) {
-            Vector2 refPos = Vector2.Reflect(transform.right, collision.GetContact(0).normal);
-            var dir = ((refPos.normalized) * bulletSpeed);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            this.gameObject.transform.eulerAngles = new Vector3(0, 0, angle);
+        // if (curBounce >= 1 || isBounce) {
+        //     Vector2 refPos = Vector2.Reflect(transform.right, collision.GetContact(0).normal);
+        //     var dir = ((refPos.normalized) * bulletSpeed);
+        //     float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        //     this.gameObject.transform.eulerAngles = new Vector3(0, 0, angle);
 
-            isBounce = true;
-            Invoke("StopBounce", 0.0f);
-            curBounce--;
-        } else {
+        //     isBounce = true;
+        //     Invoke("StopBounce", 0.0f);
+        //     curBounce--;
+        // } else {
             Instantiate(hit, transform.position, transform.rotation);
             Destroy(gameObject);
-        }
+        // }
     }
 
     void FixedUpdate() {

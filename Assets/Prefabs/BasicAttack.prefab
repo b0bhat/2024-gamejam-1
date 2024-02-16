@@ -48,18 +48,14 @@ MonoBehaviour:
   burstCount: 1
   burstTime: 1
   timeBetweenBurst: 5
-  recoil: 1
   force: 1
   spread: 5
   weaponType: 0
   damage: 4
-  damageType: 0
   bulletSpeed: 3
   penetration: 1
   angleBurst: 30
-  projInShot: 1
-  bounceTimes: 0
-  explosionRadius: 0
+  projInShot: 3
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
   bulletColor: {r: 1, g: 0.88550174, b: 0, a: 0}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 0.8f;
-    public int damageAmount = 10;
+    public float damageAmount = 10;
     public float health = 10;
     public float maxHealth = 10;
     public float attackCooldown = 0.1f; // shouldn't change as enemies get stronger tbh
@@ -64,6 +64,14 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage, Vector3 force) {
         rb.AddForce(force, ForceMode2D.Impulse);
         Hurt(damage);
+    }
+
+    public void SetScaling(float scale) {
+        maxHealth *= scale;
+        health *= scale;
+        speed += scale/10f;
+        gameObject.transform.localScale += new Vector3(scale/50f,scale/50f,scale/50f);
+        damageAmount *= scale;
     }
 
     IEnumerator DamageFlash() {

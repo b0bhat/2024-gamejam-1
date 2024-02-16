@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothSpeed: 0.125
-  offset: {x: 0, y: 0, z: -5}
+  offset: {x: 0, y: 0, z: -3}
   smoothedPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1969912099107255582
 MonoBehaviour:

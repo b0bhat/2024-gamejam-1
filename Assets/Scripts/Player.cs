@@ -14,17 +14,17 @@ public class Player : MonoBehaviour
     public float moveSpeed = 0.5f;
     public Rigidbody2D rb;
     public GameObject player;
-
     public int score = 0;
     public int money = 0; // currency
     public int maxHealth = 100;
-    private int health;
+    private float health;
 
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);
     public SpriteRenderer spriteRenderer;
     Vector2 movement;
     Vector2 mousePos;
+    public bool invincible = false;
 
     public UIManager _UIManager;
 
@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
             movement.Normalize();
         }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Input.GetKeyDown("up")) {
+            MoneyAdd(100);
+        }
     }
 
     void FixedUpdate()
@@ -61,11 +65,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator IncrementScore()
-    {
+    private IEnumerator IncrementScore() {
         while (true) {
             yield return new WaitForSeconds(1f);
             ScoreAdd(10);
+            GameManager.instance.Scale();
         }
     }
 
@@ -76,8 +80,10 @@ public class Player : MonoBehaviour
         // }
     }
 
-    public void Damage(int damage) {
-        health -= damage;
+    public void Damage(float damage) {
+        if (!invincible) {
+            health -= damage;
+        }
         CameraController.instance.ShakeCamera(0.15f, 0.05f);
         StartCoroutine(DamageFlash());
         if (_UIManager != null) {
@@ -97,7 +103,7 @@ public class Player : MonoBehaviour
         spriteRenderer.color = originalColor;
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         health += amount;
         if(health > maxHealth)

@@ -29,6 +29,7 @@ public class EnemyManager : MonoBehaviour {
 
     public void SpawnEnemy(Vector2 position) {
         GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
+        enemy.GetComponent<Enemy>().SetScaling(GameManager.instance.scaling);
         Enemies.Add(enemy);
     }
 }

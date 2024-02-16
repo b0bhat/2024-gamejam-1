@@ -5,12 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
+    public static GameManager instance;
+    void Awake() {
+        instance = this;
+    }
+    #endregion
+
     [SerializeField]
     public  GameObject _pauseUI;
     [SerializeField]
     private GameObject _pauseText;
     [SerializeField]
     private GameObject _menuUI;
+    public float scaling = 1f;
+    public float scalingFactor = 0.02f;
+    float elapsedTime = 0f;
+    public float exponentialFactor = 1f;
+    public int unlockCost = 100;
+    public int doorCost = 200;
+    public int doorCostIncrease = 100;
+    // bool doorCurPurchase = false;
+    // [TODO] implement later, prevent edge case where player can buy two doors at once
+
 
     private void Start() {
         Time.timeScale = 0;
@@ -18,12 +35,19 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)){
             PauseGame();
         }
+    }
+
+    public void Scale() {
+        elapsedTime += 1f;
+        GameManager.instance.scaling = Mathf.Pow(1 + scalingFactor, elapsedTime*exponentialFactor);
+    }
+
+    public void FinishDoorPurchase() {
+        doorCost += doorCostIncrease;
     }
 
     public void PauseGame()

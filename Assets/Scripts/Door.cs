@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Door : MonoBehaviour {
     public Vector2 roomPosition_unit;
@@ -9,8 +10,16 @@ public class Door : MonoBehaviour {
     public GameObject doorSprite;
     public GameObject doorCanvas;
     public float popupDistance = 0.5f;
-    public float doorDirection;
     private bool isPlayerNearby = false;
+    private Player player;
+    public bool doorOpened = false;
+    private GameManager manager;
+    public Color closedColor;
+    public Color openedColor;
+    public Color affordTextColor;
+    public Color poorTextColor;
+    public float doorDirection;
+    private TMP_Text doorText;
     // 0 top door
     // 90 left
     // 180 bottom
@@ -29,25 +38,52 @@ public class Door : MonoBehaviour {
         } else if (doorDirection == 270) {
             newRoomPos = new Vector2(roomPosition_unit.x + 1, roomPosition_unit.y);
         }
+        player = Player.instance;
+        manager = GameManager.instance;
+        doorSprite.GetComponent<SpriteRenderer>().color=closedColor;
+        doorText = doorCanvas.transform.GetChild(0).GetComponent<TMP_Text>();
     }
 
     // Update is called once per frame
     void Update() {
-        ShowDoorUI();
+        if (!doorOpened) {
+            ShowDoorUI();
+            if (Input.GetKeyDown("space")) {
+                if (isPlayerNearby) {
+                    DoorPurchase();
+                }
+            }
+        }
     }
 
     private void ShowDoorUI() {
-        float distance = Vector2.Distance(transform.position, Player.instance.gameObject.transform.position);
-        
+
+        float distance = Vector2.Distance(transform.position, player.gameObject.transform.position);
+        if (player.money >= manager.doorCost) {
+            doorText.color = affordTextColor;
+        } else {
+            doorText.color = poorTextColor;
+        }
         if (distance <= popupDistance && !isPlayerNearby) {
-            // Player is close enough to show the popup
             doorCanvas.SetActive(true);
             isPlayerNearby = true;
+            doorText.text = GameManager.instance.doorCost.ToString();
         }
         else if (distance > popupDistance && isPlayerNearby) {
-            // Player moved away, hide the popup
             doorCanvas.SetActive(false);
             isPlayerNearby = false;
+        }
+    }
+
+    private void DoorPurchase() {
+        if (player.money >= manager.doorCost) {
+            player.MoneySpend(manager.doorCost);
+            CameraController.instance.ShakeCamera(0.01f, 0.1f);
+            doorSprite.GetComponent<BoxCollider2D>().enabled=false;
+            doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
+            manager.FinishDoorPurchase();
+            doorOpened = true;
+            doorCanvas.SetActive(false);
         }
     }
 

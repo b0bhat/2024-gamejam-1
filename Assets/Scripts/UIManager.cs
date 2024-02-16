@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         _moneyText.text = "Money: " + money;
     }
 
-    public void UpdateHealthSlider(int amount)
+    public void UpdateHealthSlider(float amount)
     {
         _healthSlider.value = amount;
     }

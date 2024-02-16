@@ -5,22 +5,17 @@ using UnityEngine;
 public class AttackScript : MonoBehaviour
 {
     [SerializeField] public float reloadTime = 2f;
-    //[SerializeField] public int ammoCap = 30;
-    [SerializeField] public int burstCount = 1;
+    [SerializeField] public int burstCount = 1; // shots in a burst
     [SerializeField] public float burstTime = 1f;
-    [SerializeField] public float timeBetweenBurst = 1f;
-    [SerializeField] public float recoil = 1f;
-    [SerializeField] public float force = 1f;
-    [SerializeField] public float spread = 1f;
+    [SerializeField] public float timeBetweenBurst = 1f; // Time between shots in a burst
+    [SerializeField] public float force = 1f; // knockback
+    [SerializeField] public float spread = 1f; // Weapon accuracy
     [SerializeField] public int weaponType = 0;
     [SerializeField] public float damage = 0;
-    [SerializeField] public float damageType = 0;
-    [SerializeField] public float bulletSpeed = 50;
-    [SerializeField] public int penetration = 1;
-    [SerializeField] public float angleBurst = 0f;
+    [SerializeField] public float bulletSpeed = 50; 
+    [SerializeField] public int penetration = 1; // how many enemies can bullet go through
+    [SerializeField] public float angleBurst = 0f; // multi shot weapon angle
     [SerializeField] public int projInShot = 1;
-    [SerializeField] public int bounceTimes = 0;
-    [SerializeField] public int explosionRadius = 0;
     [SerializeField] GameObject Bullet;
     [SerializeField] Transform firePoint;
     [ColorUsageAttribute(true,true)] public Color bulletColor;
@@ -40,7 +35,7 @@ public class AttackScript : MonoBehaviour
     {
         //weapon = GetComponent<ParticleSystem>();
         //weapon.GetComponent<ParticleSystem>().Stop();
-        cooldown = reloadTime;
+        //cooldown = reloadTime;
         //ammoCount = ammoCap;
         burstNum = 0;
         burstTick = 0;
@@ -74,12 +69,12 @@ public class AttackScript : MonoBehaviour
     // }
 
     public void Fire() {
-        CameraController.instance.ShakeCamera(0.05f, force*0.01f);
+        //CameraController.instance.ShakeCamera(0.05f, force*0.01f);
         for (int i = 1; i <= projInShot; i++) {
             var inc = angleBurst / projInShot;
             var angle = -angleBurst / 2f + (inc / 2) + (inc * (i - 1));
             GameObject bullet = Instantiate(Bullet);
-            bullet.GetComponent<BulletParticle>().SetWeapon(damage, force, penetration, bulletColor, bounceTimes, bulletSpeed);
+            bullet.GetComponent<BulletParticle>().SetWeapon(damage, force, penetration, bulletColor, bulletSpeed);
 
             Quaternion spreadRotation = Quaternion.Euler(0, 0, angle + Random.Range(-spread, spread));
             
