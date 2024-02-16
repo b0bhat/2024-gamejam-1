@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
     Vector2 mousePos;
     public bool invincible = false;
 
+    [SerializeField]
+    private AudioClip hitAudio;
+    [SerializeField]
+    private AudioClip deathAudio;
+    private AudioSource audioSource;
+
     public UIManager _UIManager;
 
     public List<AttackScript> attacks = new List<AttackScript>();
@@ -35,6 +41,7 @@ public class Player : MonoBehaviour
         if (_UIManager == null){
             Debug.LogError("UI Manager is NULL!");
         }
+        audioSource = GetComponent<AudioSource>();
         originalColor = spriteRenderer.color;
         health = maxHealth;
         _UIManager.UpdateHealthSlider(health);
@@ -83,6 +90,11 @@ public class Player : MonoBehaviour
     public void Damage(float damage) {
         if (!invincible) {
             health -= damage;
+            if(audioSource.clip != hitAudio)
+            {
+                audioSource.clip = hitAudio;
+            }
+            audioSource.Play();
         }
         CameraController.instance.ShakeCamera(0.15f, 0.05f);
         StartCoroutine(DamageFlash());
@@ -92,8 +104,15 @@ public class Player : MonoBehaviour
             Debug.LogWarning("_UIManager is null in Damage method!");
         }
         if (health <= 0) {
+            if (audioSource.clip != deathAudio)
+            {
+                audioSource.clip = deathAudio;
+            }
+            audioSource.Play();
             _UIManager.GameOverSequence();
-            this.gameObject.SetActive(false);
+            this.GetComponent<Collider2D>().enabled = false;
+            player.SetActive(false);
+            Destroy(this.gameObject, 1.0f);
         }
     }
 

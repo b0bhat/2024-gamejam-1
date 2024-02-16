@@ -26,6 +26,7 @@ public class Door : MonoBehaviour {
     // 270 right
 
     private Vector2 newRoomPos = new Vector2(0,0);
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start() {
@@ -42,6 +43,7 @@ public class Door : MonoBehaviour {
         manager = GameManager.instance;
         doorSprite.GetComponent<SpriteRenderer>().color=closedColor;
         doorText = doorCanvas.transform.GetChild(0).GetComponent<TMP_Text>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -57,21 +59,28 @@ public class Door : MonoBehaviour {
     }
 
     private void ShowDoorUI() {
-
-        float distance = Vector2.Distance(transform.position, player.gameObject.transform.position);
-        if (player.money >= manager.doorCost) {
-            doorText.color = affordTextColor;
-        } else {
-            doorText.color = poorTextColor;
-        }
-        if (distance <= popupDistance && !isPlayerNearby) {
-            doorCanvas.SetActive(true);
-            isPlayerNearby = true;
-            doorText.text = GameManager.instance.doorCost.ToString();
-        }
-        else if (distance > popupDistance && isPlayerNearby) {
-            doorCanvas.SetActive(false);
-            isPlayerNearby = false;
+        if(player != null)
+        {
+            float distance = Vector2.Distance(transform.position, player.gameObject.transform.position);
+            if (player.money >= manager.doorCost)
+            {
+                doorText.color = affordTextColor;
+            }
+            else
+            {
+                doorText.color = poorTextColor;
+            }
+            if (distance <= popupDistance && !isPlayerNearby)
+            {
+                doorCanvas.SetActive(true);
+                isPlayerNearby = true;
+                doorText.text = GameManager.instance.doorCost.ToString();
+            }
+            else if (distance > popupDistance && isPlayerNearby)
+            {
+                doorCanvas.SetActive(false);
+                isPlayerNearby = false;
+            }
         }
     }
 
@@ -84,6 +93,7 @@ public class Door : MonoBehaviour {
             manager.FinishDoorPurchase();
             doorOpened = true;
             doorCanvas.SetActive(false);
+            audioSource.Play();
         }
     }
 

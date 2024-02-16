@@ -24,6 +24,7 @@ public class Room : MonoBehaviour
     public bool hidden = true;
     public bool playerInRoom = false;
     public bool firstFrame = true;
+    private AudioSource audioSource;
 
     public struct WallPair {
         public GameObject thisWall;
@@ -38,6 +39,7 @@ public class Room : MonoBehaviour
     }
 
     void Start() {
+        audioSource = GetComponent<AudioSource>();
         width = width_unit*unit_mult;
         height = height_unit*unit_mult;
         position = transform.position;
@@ -72,6 +74,7 @@ public class Room : MonoBehaviour
             if (playerInRoom) {
                 Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
                 EnemyManager.instance.SpawnEnemy(spawnPosition);
+                audioSource.Play();
                 yield return new WaitForSeconds(Random.Range(4.0f, 10.0f));
             }
             else {

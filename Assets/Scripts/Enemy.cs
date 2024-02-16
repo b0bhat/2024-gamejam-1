@@ -24,10 +24,13 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private Coroutine attackCoroutine;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         player = Player.instance;
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         spriteRenderer = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0); 
@@ -94,6 +97,7 @@ public class Enemy : MonoBehaviour
         //     bloodLow = 0f;
         // }
         health -= damage;
+        audioSource.Play();
     }
 
     void Die() {
