@@ -408,7 +408,7 @@ MonoBehaviour:
   closedColor: {r: 1, g: 0.7483395, b: 0.25943398, a: 1}
   openedColor: {r: 0.67058825, g: 0.48030108, b: 0, a: 0.3137255}
   affordTextColor: {r: 1, g: 1, b: 1, a: 0.6117647}
-  poorTextColor: {r: 0, g: 0, b: 0, a: 0.7529412}
+  poorTextColor: {r: 1, g: 0.26447567, b: 0, a: 0.7529412}
   doorDirection: 0
 --- !u!212 &8084665422589749169
 SpriteRenderer:
@@ -667,7 +667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.219}
+  m_AnchoredPosition: {x: 0, y: 0.21899998}
   m_SizeDelta: {x: 1.0874, y: 0.2496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5959900088453284489

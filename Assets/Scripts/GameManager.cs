@@ -18,6 +18,12 @@ public class GameManager : MonoBehaviour
     private GameObject _pauseText;
     [SerializeField]
     private GameObject _menuUI;
+    [SerializeField]
+    private GameObject _upgradeUI;
+    [SerializeField]
+    private AudioClip battleSong;
+    [SerializeField]
+    private AudioSource musicSource;
     public float scaling = 1f;
     public float scalingFactor = 0.02f;
     float elapsedTime = 0f;
@@ -81,5 +87,20 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         _menuUI.SetActive(false);
+        musicSource.clip = battleSong;
+        musicSource.Play();
+    }
+
+    public void ShowUpgradeMenu()
+    {
+        Time.timeScale = 0;
+        _upgradeUI.SetActive(true);
+    }
+
+    public void UpgradeSelected()
+    {
+        Time.timeScale = 1;
+        _upgradeUI.SetActive(false);
+        //add selected upgrade to player
     }
 }
