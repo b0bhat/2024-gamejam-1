@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,6 +71,14 @@ public class Player : MonoBehaviour
         foreach (AttackScript attack in attacks) {
             attack.Check(true);
         }
+    }
+
+    public bool CheckAttack(String attackName, String upgradeName) {
+        foreach (AttackScript attack in attacks) {
+            if (attack.checkUpgrade(attackName, upgradeName)) {
+                return true;
+            }
+        } return false;
     }
 
     private IEnumerator IncrementScore() {

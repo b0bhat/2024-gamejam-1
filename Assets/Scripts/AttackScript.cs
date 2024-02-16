@@ -1,25 +1,28 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackScript : MonoBehaviour
-{
-    [SerializeField] public float reloadTime = 2f;
-    [SerializeField] public int burstCount = 1; // shots in a burst
-    [SerializeField] public float burstTime = 1f;
-    [SerializeField] public float timeBetweenBurst = 1f; // Time between shots in a burst
-    [SerializeField] public float force = 1f; // knockback
-    [SerializeField] public float spread = 1f; // Weapon accuracy
-    [SerializeField] public int weaponType = 0;
-    [SerializeField] public float damage = 0;
-    [SerializeField] public float bulletSpeed = 50; 
-    [SerializeField] public int penetration = 1; // how many enemies can bullet go through
-    [SerializeField] public float angleBurst = 0f; // multi shot weapon angle
-    [SerializeField] public int projInShot = 1;
-    [SerializeField] GameObject Bullet;
-    [SerializeField] Transform firePoint;
+public class AttackScript : MonoBehaviour {
+    public String attackName = "BasicAttack";
+    public float reloadTime = 2f;
+    public int burstCount = 1; // shots in a burst
+    public float burstTime = 1f;
+    public float fireRate = 1f; // Time between shots in a burst
+    public float force = 1f; // knockback
+    public float spread = 1f; // Weapon accuracy
+    public int weaponType = 0;
+    public float damage = 0;
+    public float bulletSpeed = 50; 
+    public int penetration = 1; // how many enemies can bullet go through
+    public float angleBurst = 0f; // multi shot weapon angle
+    public int projInShot = 1;
+    public GameObject Bullet;
+    public Transform firePoint;
     AudioSource audioSource;
     [ColorUsageAttribute(true,true)] public Color bulletColor;
+    public List<UpgradeAsset> currentUpgrades = new();
 
     public float cooldown;
 
@@ -42,28 +45,35 @@ public class AttackScript : MonoBehaviour
         burstTick = 0;
 
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.2f;
     }
 
     public void Check(bool shooting) {
-        if (shooting && cooldown >= timeBetweenBurst) {
+        if (shooting && cooldown >= 5f/fireRate) {
             cooldown = 0f;
             Fire();
             shooting = false;
             if (burstCount > 1) burstNum = 1;
         } else if (burstNum >= 1) {
-            if (burstTick >= burstNum * burstTime){
+            if (burstTick >= burstNum * 5/burstTime){
                 Fire();
                 burstNum += 1;
             } burstTick += tickRate;
-            if (burstTick >= burstCount * burstTime) {
+            if (burstTick >= burstCount * 5/burstTime) {
                 burstNum = 0;
                 burstTick = 0;
             }
         } else {
-            if (cooldown < timeBetweenBurst) {
+            if (cooldown < 5f/fireRate) {
                 cooldown += tickRate;
             }
         }
+    }
+
+    public bool checkUpgrade(String checkAttackName, String upgradeName) {
+        // check correct attack, checks number of duplicate upgrades, if 2 or less, then good
+        int count = currentUpgrades.Count(obj => obj.name == upgradeName);
+        return count <= 2 && checkAttackName == attackName;
     }
 
     // public void Reload() {
@@ -78,7 +88,7 @@ public class AttackScript : MonoBehaviour
             GameObject bullet = Instantiate(Bullet);
             bullet.GetComponent<BulletParticle>().SetWeapon(damage, force, penetration, bulletColor, bulletSpeed);
 
-            Quaternion spreadRotation = Quaternion.Euler(0, 0, angle + Random.Range(-spread, spread));
+            Quaternion spreadRotation = Quaternion.Euler(0, 0, angle + UnityEngine.Random.Range(-spread, spread));
             
             // Instead of setting rotation directly, rotate the bullet's direction vector by the spread angle
             Vector3 bulletDirection = Quaternion.Euler(0, 0, angle) * transform.up;

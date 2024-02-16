@@ -48,7 +48,7 @@ MonoBehaviour:
   reloadTime: 2
   burstCount: 1
   burstTime: 1
-  timeBetweenBurst: 5
+  fireRate: 0.8
   force: 1
   spread: 5
   weaponType: 0
@@ -59,7 +59,6 @@ MonoBehaviour:
   projInShot: 3
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
-  audioSource: {fileID: 0}
   bulletColor: {r: 1, g: 0.88550174, b: 0, a: 0}
   cooldown: 0
   burstNum: 0

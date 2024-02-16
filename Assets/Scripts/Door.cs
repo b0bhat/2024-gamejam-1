@@ -44,6 +44,7 @@ public class Door : MonoBehaviour {
         doorSprite.GetComponent<SpriteRenderer>().color=closedColor;
         doorText = doorCanvas.transform.GetChild(0).GetComponent<TMP_Text>();
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.5f;
     }
 
     // Update is called once per frame

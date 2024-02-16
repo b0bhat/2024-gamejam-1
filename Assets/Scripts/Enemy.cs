@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
         player = Player.instance;
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.3f;
         spriteRenderer = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0); 
