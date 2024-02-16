@@ -18,6 +18,7 @@ public class AttackScript : MonoBehaviour
     [SerializeField] public int projInShot = 1;
     [SerializeField] GameObject Bullet;
     [SerializeField] Transform firePoint;
+    AudioSource audioSource;
     [ColorUsageAttribute(true,true)] public Color bulletColor;
 
     public float cooldown;
@@ -40,6 +41,7 @@ public class AttackScript : MonoBehaviour
         burstNum = 0;
         burstTick = 0;
 
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Check(bool shooting) {
@@ -88,6 +90,7 @@ public class AttackScript : MonoBehaviour
             rb.AddForce(spreadDirection.normalized * bulletSpeed, ForceMode2D.Impulse); // Normalize the spreadDirection to ensure consistent speed
             bullet.transform.position = firePoint.transform.position;
         }
+        audioSource.Play();
     }
 
 }
