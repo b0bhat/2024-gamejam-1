@@ -12,11 +12,19 @@ public class UpgradeAsset : ScriptableObject {
     public Sprite upgradeIcon;
     public Color upgradeIconColor;
     public List<Upgrade> upgrades = new List<Upgrade>();
+    public List<StatBuff> statbuffs = new List<StatBuff>();
 }
 
 [System.Serializable]
 public class Upgrade {
     public GameManager.UpgradeType type;
+    public float value;
+    // public Color bulletColor;
+}
+
+[System.Serializable]
+public class StatBuff {
+    public GameManager.StatBuffType type;
     public float value;
     // public Color bulletColor;
 }

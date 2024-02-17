@@ -58,6 +58,12 @@ public class GameManager : MonoBehaviour
         bulletColor
     }
 
+    public enum StatBuffType {
+        health,
+        speed,
+        // addmore
+    }
+
     private Player player;
 
     List<UpgradeAsset> selectedItems = new();
@@ -193,6 +199,9 @@ public class GameManager : MonoBehaviour
         }
         if (selectedUpgrade.upgradeType == 3) {
             player.AddNewAttack(selectedUpgrade.attackObject);
+        }
+        if (selectedUpgrade.upgradeType == 4) {
+            // healing
         }
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too

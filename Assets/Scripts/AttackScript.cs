@@ -43,7 +43,7 @@ public class AttackScript : MonoBehaviour {
         burstTick = 0;
 
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = 0.2f;
+        audioSource.volume = 0.1f;
         firePoint =  GameObject.Find("firepoint").transform;
     }
 
