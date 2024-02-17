@@ -5,11 +5,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 0.8f;
+    public float drift = 0.3f;
     public float damageAmount = 10;
     public float health = 10;
     public float maxHealth = 10;
+    public float force = 1f;
     public float attackCooldown = 0.1f; // shouldn't change as enemies get stronger tbh
-
+    public int enemyValue = 10;
     public float fadeInDuration = 1.0f;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     private AudioSource audioSource;
     private bool dangerClose;
+    float playerDist;
 
     void Start()
     {
@@ -34,10 +37,11 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0.3f;
-        spriteRenderer = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0); 
         StartCoroutine(FadeIn());
+        StartCoroutine(ApplyRandomForce());
     }
 
     IEnumerator FadeIn()
@@ -67,7 +71,7 @@ public class Enemy : MonoBehaviour
             Die();
         }
         if (player != null) {
-            float playerDist = Vector3.Distance(transform.position, player.gameObject.transform.position);
+            playerDist = Vector3.Distance(transform.position, player.gameObject.transform.position);
             if (playerDist < 0.5f ) {
                 dangerClose = true;
                 spriteRenderer.color = dangerColor;
@@ -77,6 +81,19 @@ public class Enemy : MonoBehaviour
             } else if (playerDist > 7f) {
                 //Debug.Log("deleted");
                 Destroy(gameObject); // Cleanup
+            }
+        }
+    }
+
+    IEnumerator ApplyRandomForce() {
+        while (true) {
+            if (playerDist < 5f) {
+                Vector2 randomForce = Random.insideUnitCircle.normalized * drift;
+                rb.AddForce(randomForce, ForceMode2D.Impulse);
+                yield return new WaitForSeconds(Random.Range(1.5f, 2.5f)); 
+            }
+            else {
+                yield return new WaitForSeconds(1.0f);
             }
         }
     }
@@ -119,6 +136,7 @@ public class Enemy : MonoBehaviour
 
     void Die() {
         GameObject money = Instantiate(moneyPrefab);
+        money.GetComponent<Money>().value = enemyValue;
         GameObject corpse = Instantiate(deadPrefab);
         money.transform.position = transform.position;
         corpse.transform.position = transform.position;
@@ -137,7 +155,7 @@ public class Enemy : MonoBehaviour
     IEnumerator AttackPlayerWithDelay() {
         if (player != null && gameObject != null) {
             canDamage = false;
-            player.Damage(damageAmount);
+            player.Damage(damageAmount, rb.velocity * 0.2f*force);
             yield return new WaitForSeconds(attackCooldown);
             canDamage = true;
         }

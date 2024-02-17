@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c2473c6872545458233cb076892970, type: 3}
   m_Name: surround1
   m_EditorClassIdentifier: 
-  assetName: +2 Projectiles
+  assetName: +3 Bullets
   attackObject: {fileID: 3547458165943492905, guid: e05c3900783bc6848a2022ca95db3ff1, type: 3}
   upgradeType: 0
   upgradeIcon: {fileID: 21300000, guid: e1d89df69bb9b0842aa4a8070cee1301, type: 3}
   upgradeIconColor: {r: 0.6901961, g: 0, b: 1, a: 1}
   upgrades:
   - type: 9
-    value: 2
+    value: 3
+  statbuffs: []

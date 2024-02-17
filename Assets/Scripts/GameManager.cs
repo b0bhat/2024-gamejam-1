@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private AudioClip battleSong;
     [SerializeField]
     private AudioSource musicSource;
+    [SerializeField]
+    private GameObject tutorial;
     public float scaling = 1f;
     public float scalingFactor = 0.02f;
     float elapsedTime = 0f;
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
     public enum StatBuffType {
         health,
         speed,
-        // addmore
+        moneyIncrease,
     }
 
     private Player player;
@@ -143,19 +145,27 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1;
-        _menuUI.SetActive(false);
+        tutorial.gameObject.SetActive(false);
         pauseLock = false;
-        ChromaticAberration.intensity.Override(0.2f);
         musicSource.clip = battleSong;
         musicSource.Play();
+        //CameraController.instance.ShakeCamera(0.1f,2f);
+    }
+    public void TutorialScreen () {
+        ChromaticAberration.intensity.Override(0.15f);
+        tutorial.gameObject.SetActive(true);
+        _menuUI.SetActive(false);
+        //CameraController.instance.ShakeCamera(0.1f,2f);
     }
 
     public void ShowUpgradeMenu() {
         Time.timeScale = 0;
         List<UpgradeAsset> validUpgrades = new();
-        // [TODO] Stat upgrades
+
+        // Stat upgrades
         foreach (UpgradeAsset upgrade in statUpgradeList) {
-         }
+            validUpgrades.Add(upgrade);
+        }
         // Check attack upgrades
         foreach (UpgradeAsset upgrade in attackUpgradeList) {
             if (player.CheckAttackUpgrade(upgrade.attackObject, upgrade.name)) {
@@ -199,7 +209,7 @@ public class GameManager : MonoBehaviour
             ApplyAttackUpgrade(selectedUpgrade.attackObject, selectedUpgrade);
         }
         if (selectedUpgrade.upgradeType == 2) {
-            // [TODO] apply player stat upgrade
+            ApplyStatUpgrade(selectedUpgrade);
         }
         if (selectedUpgrade.upgradeType == 3) {
             player.AddNewAttack(selectedUpgrade.attackObject);
@@ -209,6 +219,22 @@ public class GameManager : MonoBehaviour
         }
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too
+    }
+
+    private void ApplyStatUpgrade(UpgradeAsset upgradeAsset) {
+        foreach (StatBuff statBuff in upgradeAsset.statbuffs) {
+            switch(statBuff.type) {
+                case StatBuffType.health:
+                    player.Heal((int)statBuff.value, true);
+                    break;
+                case StatBuffType.speed:
+                    player.moveSpeed += (int)statBuff.value;
+                    break;
+                case StatBuffType.moneyIncrease:
+                    player.moneyIncrease += (int)statBuff.value;
+                    break;
+            }
+        }
     }
 
     private void ApplyAttackUpgrade(GameObject attackObject, UpgradeAsset upgradeAsset) {

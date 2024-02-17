@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: basicUlt2
   m_EditorClassIdentifier: 
   assetName: Upgrade
-  attackName: BasicAttack
+  attackObject: {fileID: 0}
   upgradeType: 1
   upgradeIcon: {fileID: 0}
+  upgradeIconColor: {r: 0, g: 0, b: 0, a: 0}
   upgrades:
   - type: 7
-    value: 3
+    value: 2
   - type: 9
-    value: 3
+    value: 2
+  statbuffs: []

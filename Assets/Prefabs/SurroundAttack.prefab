@@ -52,10 +52,10 @@ MonoBehaviour:
   spread: 30
   weaponType: 0
   damage: 3
-  bulletSpeed: 2
+  bulletSpeed: 1.5
   penetration: 1
   angleBurst: 180
-  projInShot: 6
+  projInShot: 5
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
   bulletColor: {r: 0.47192192, g: 0, b: 1, a: 1}

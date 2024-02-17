@@ -13,7 +13,10 @@ public class EnemyManager : MonoBehaviour {
 
     List<GameObject> Enemies = new List<GameObject>();
 
-    public GameObject enemyPrefab;
+    public GameObject enemyStandardPrefab;
+    public GameObject enemyTankPrefab;
+    public GameObject enemySwarmPrefab;
+    //public GameObject enemyPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,16 @@ public class EnemyManager : MonoBehaviour {
     }
 
     public void SpawnEnemy(Vector2 position) {
+        GameObject enemyPrefab;
+        float randomValue = Random.value;
+        if (randomValue <= 0.5f) {
+            enemyPrefab = enemyStandardPrefab;
+        }
+        else if (randomValue <= 0.9f) {
+            enemyPrefab = enemySwarmPrefab;
+        } else {
+            enemyPrefab = enemyTankPrefab;
+        }
         GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
         enemy.GetComponent<Enemy>().SetScaling(GameManager.instance.scaling);
         Enemies.Add(enemy);

@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public int money = 0; // currency
     public int maxHealth = 100;
     public float health;
+    public int moneyIncrease = 0;
 
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);
@@ -47,6 +48,10 @@ public class Player : MonoBehaviour
     private GameObject _UIface;
     [SerializeField] List<Sprite> faces = new();
 
+    // UnityEngine.Rendering.Universal.Vignette Vignette;
+    // UnityEngine.Rendering.ColorParameter vignetteOriginalColor;
+    // public UnityEngine.Rendering.ColorParameter vignetteHurtColor;
+
     void Start() {
         _UIManager = GameObject.FindWithTag("UI").GetComponent<UIManager>();
         if (_UIManager == null){
@@ -56,10 +61,14 @@ public class Player : MonoBehaviour
         originalColor = spriteRenderer.color;
         health = maxHealth;
         _UIManager.UpdateHealthSlider(health);
+        _UIManager.UpdateHealthSliderMax(maxHealth);
         StartCoroutine(IncrementScore());
         _UIchar = GameObject.Find("UIcharacter");
         _UIface = GameObject.Find("UIface");
         AddNewAttack(startAttackPrefab);
+        // UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
+        // profile.TryGet(out Vignette);
+        // vignetteOriginalColor = Vignette.color;
     }
 
     void Update() {
@@ -134,7 +143,7 @@ public class Player : MonoBehaviour
         // }
     }
 
-    public void Damage(float damage) {
+    public void Damage(float damage, Vector3 force) {
         if (_UIManager != null) {
             _UIManager.UpdateHealthSlider(health);
         } else {
@@ -142,6 +151,7 @@ public class Player : MonoBehaviour
         }
         if (!invincible) {
             health -= damage;
+            rb.AddForce(force, ForceMode2D.Impulse);
             if(audioSource.clip != hitAudio) {
                 audioSource.clip = hitAudio;
             }
@@ -166,18 +176,24 @@ public class Player : MonoBehaviour
 
     IEnumerator DamageFlash() {
         spriteRenderer.color = damagedColor;
+        //Vignette.color = vignetteHurtColor;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = originalColor;
+        //Vignette.color = vignetteOriginalColor;
     }
 
-    public void Heal(float amount)
-    {
+    public void Heal(int amount, bool maxUp=false) {
+        if (maxUp) {
+            maxHealth += amount;
+             _UIManager.UpdateHealthSliderMax(maxHealth);
+        }
         health += amount;
         if(health > maxHealth)
         {
             health = maxHealth;
         }
         _UIManager.UpdateHealthSlider(health);
+       
     }
 
     public void ScoreAdd(int points)
@@ -189,6 +205,7 @@ public class Player : MonoBehaviour
     public void MoneyAdd(int points)
     {
         money += points;
+        money += moneyIncrease;
         UIChar(2);
         _UIManager.UpdateMoneyText(money);
     }

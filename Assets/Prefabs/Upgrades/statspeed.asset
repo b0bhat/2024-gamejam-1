@@ -10,16 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4c2473c6872545458233cb076892970, type: 3}
-  m_Name: basicUlt1
+  m_Name: statspeed
   m_EditorClassIdentifier: 
-  assetName: Upgrade
+  assetName: Move Speed
   attackObject: {fileID: 0}
-  upgradeType: 1
-  upgradeIcon: {fileID: 0}
-  upgradeIconColor: {r: 0, g: 0, b: 0, a: 0}
-  upgrades:
-  - type: 5
-    value: 0.6
-  - type: 3
-    value: 0.5
-  statbuffs: []
+  upgradeType: 2
+  upgradeIcon: {fileID: 21300000, guid: 2987006ba75044547b5dc621b3d3033c, type: 3}
+  upgradeIconColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+  upgrades: []
+  statbuffs:
+  - type: 1
+    value: 0.15

@@ -96,7 +96,7 @@ public class Door : MonoBehaviour {
             doorSprite.GetComponent<BoxCollider2D>().enabled=false;
             doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
             manager.FinishDoorPurchase();
-            player.Heal(30f);
+            player.Heal(30);
             doorOpened = true;
             foreach (Room room in rooms) {
                 room.ShowRoom();

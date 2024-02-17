@@ -67,6 +67,7 @@ public class Room : MonoBehaviour
     }
 
     IEnumerator SpawnEnemy(GameObject wall) {
+        yield return new WaitForSeconds(Random.Range(0.1f, 4.0f));
         while (true) {
             if (ReferenceEquals(wall, null) || wall.Equals(null)){
                 yield break;
@@ -75,10 +76,10 @@ public class Room : MonoBehaviour
                 Vector2 spawnPosition = wall.transform.GetChild(0).transform.position;
                 EnemyManager.instance.SpawnEnemy(spawnPosition);
                 audioSource.Play();
-                yield return new WaitForSeconds(Random.Range(4.0f, 10.0f));
+                yield return new WaitForSeconds(Random.Range(5.0f, 12.0f));
             }
             else {
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
             }
         }
     }

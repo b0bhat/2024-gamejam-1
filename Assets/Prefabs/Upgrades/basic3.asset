@@ -20,3 +20,6 @@ MonoBehaviour:
   upgrades:
   - type: 7
     value: 1
+  - type: 5
+    value: -0.2
+  statbuffs: []

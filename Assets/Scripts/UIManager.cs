@@ -41,6 +41,11 @@ public class UIManager : MonoBehaviour
         _healthSlider.value = amount;
     }
 
+    public void UpdateHealthSliderMax(float amount)
+    {
+        _healthSlider.maxValue = amount;
+    }
+
     public void GameOverSequence()
     {
         GameManager.instance.pauseLock = true;

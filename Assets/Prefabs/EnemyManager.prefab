@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b319581849e7544f83de5947599aca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8775386531751435792, guid: 58f5e6865bb6581418cc0269e3f13e60, type: 3}
+  enemyStandardPrefab: {fileID: 8775386531751435792, guid: 58f5e6865bb6581418cc0269e3f13e60, type: 3}
+  enemyTankPrefab: {fileID: 8775386531751435792, guid: 134c3e96894db8641a1645433ae41f37, type: 3}
+  enemySwarmPrefab: {fileID: 8775386531751435792, guid: e561681fb68759648a7c5b777a14dfca, type: 3}

@@ -19,6 +19,7 @@ MonoBehaviour:
   upgradeIconColor: {r: 0.6901961, g: 0, b: 1, a: 1}
   upgrades:
   - type: 6
-    value: 0.2
+    value: 0.3
   - type: 5
-    value: 0.2
+    value: 0.3
+  statbuffs: []
