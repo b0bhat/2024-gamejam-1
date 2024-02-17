@@ -42,7 +42,7 @@ public class chest : MonoBehaviour
         if (player != null)
         {
             float distance = Vector2.Distance(transform.position, player.gameObject.transform.position);
-            if (player.money >= manager.chestCost)
+            if (player.money >= manager.unlockCost)
             {
                 chestText.color = affordTextColor;
             }
@@ -54,7 +54,7 @@ public class chest : MonoBehaviour
             {
                 chestCanvas.SetActive(true);
                 isPlayerNearby = true;
-                chestText.text = GameManager.instance.chestCost.ToString();
+                chestText.text = GameManager.instance.unlockCost.ToString();
             }
             else if (distance > popupDistance && isPlayerNearby)
             {
@@ -66,12 +66,13 @@ public class chest : MonoBehaviour
 
     private void ChestPurchase()
     {
-        if (player.money >= manager.doorCost)
+        if (player.money >= manager.unlockCost)
         {
-            player.MoneySpend(manager.chestCost);
-            player.Heal(player.maxHealth - player.health);
+            player.MoneySpend(manager.unlockCost);
+            //player.Heal(player.maxHealth - player.health);
             audioSource.Play();
             manager.ShowUpgradeMenu();
+            manager.FinishChestPurchase();
             Destroy(this.gameObject);
         }
     }

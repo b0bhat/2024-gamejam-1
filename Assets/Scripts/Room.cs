@@ -147,6 +147,8 @@ public class Room : MonoBehaviour
                 middleIndex = UnityEngine.Random.Range(middleIndex - 1, middleIndex + 1);
             GameObject door = Instantiate(doorPrefab, thisWallsOverlap[middleIndex].position, Quaternion.identity, transform);
             door.GetComponent<Door>().SetDoorRotation(thisWallsOverlap[middleIndex].thisWall.transform.rotation);
+            door.GetComponent<Door>().AddRoom(thisWallsOverlap[middleIndex].thisWall.transform.parent.gameObject);
+            door.GetComponent<Door>().AddRoom(thisWallsOverlap[middleIndex].otherWall.transform.parent.gameObject);
             Destroy(thisWallsOverlap[middleIndex].thisWall);
             Destroy(thisWallsOverlap[middleIndex].otherWall);
             door_generated = true;

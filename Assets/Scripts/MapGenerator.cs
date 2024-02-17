@@ -16,7 +16,7 @@ public class MapGenerator : MonoBehaviour
     public List<Vector2> roomPositions = new List<Vector2>();
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
-    private int[] roomSizes = {2, 3, 4, 5, 6, 7};
+    private int[] roomSizes = {3, 4, 5, 6, 7, 8};
     [SerializeField] private int maxChests = 3;
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();

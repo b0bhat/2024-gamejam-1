@@ -19,11 +19,12 @@ public class Door : MonoBehaviour {
     public Color affordTextColor;
     public Color poorTextColor;
     public float doorDirection;
-    private TMP_Text doorText;
-    // 0 top door
+        // 0 top door
     // 90 left
     // 180 bottom
     // 270 right
+    private TMP_Text doorText;
+    public List<Room> rooms = new();
 
     private Vector2 newRoomPos = new Vector2(0,0);
     private AudioSource audioSource;
@@ -85,13 +86,21 @@ public class Door : MonoBehaviour {
         }
     }
 
+    public void AddRoom(GameObject room) {
+        rooms.Add(room.GetComponent<Room>());
+    }
+
     private void DoorPurchase() {
         if (player.money >= manager.doorCost) {
             player.MoneySpend(manager.doorCost);
             doorSprite.GetComponent<BoxCollider2D>().enabled=false;
             doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
             manager.FinishDoorPurchase();
+            player.Heal(30f);
             doorOpened = true;
+            foreach (Room room in rooms) {
+                room.ShowRoom();
+            }
             doorCanvas.SetActive(false);
             audioSource.Play();
             manager.ShowUpgradeMenu();
@@ -101,11 +110,11 @@ public class Door : MonoBehaviour {
     public void SetDoorRotation(Quaternion rotation) {
         doorSprite.transform.rotation = rotation;
     }
-    void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            // GenerateNewRoom();
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other) {
+    //     if (other.CompareTag("Player")) {
+    //         // GenerateNewRoom();
+    //     }
+    // }
 
     public void GenerateNewRoom() {
         if (!activated) {

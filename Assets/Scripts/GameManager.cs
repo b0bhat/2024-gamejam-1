@@ -31,10 +31,11 @@ public class GameManager : MonoBehaviour
     float elapsedTime = 0f;
     public float exponentialFactor = 1f;
     public int unlockCost = 100;
+    public int unlockCostIncrease = 50;
     public int doorCost = 100;
-    public int doorCostIncrease = 50;
+    public int doorCostIncrease = 100;
     public int chestCost = 100;
-    bool pauseLock = false;
+    public bool pauseLock = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
         // if (_menuUI.activeInHierarchy == true && canShake) {
         //     CameraController.instance.ShakeCamera(0.5f,1f);
         // }
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape) && !pauseLock){
             PauseGame();
         }
     }
@@ -106,6 +107,10 @@ public class GameManager : MonoBehaviour
 
     public void FinishDoorPurchase() {
         doorCost += doorCostIncrease;
+    }
+
+    public void FinishChestPurchase() {
+        unlockCost += unlockCostIncrease;
     }
 
     public void PauseGame()

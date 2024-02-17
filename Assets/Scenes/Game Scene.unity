@@ -4987,10 +4987,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 8198318320347356578, guid: 50f673aceb686ea4c9c37ef9d534b068, type: 3}
-      propertyPath: orthographic size
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5043,10 +5039,6 @@ PrefabInstance:
     - target: {fileID: 2909635727580721271, guid: f826b604b62f5244188191aa9bed5009, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7778051624848936958, guid: f826b604b62f5244188191aa9bed5009, type: 3}
-      propertyPath: numRooms
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9217339462884127404, guid: f826b604b62f5244188191aa9bed5009, type: 3}
       propertyPath: m_Name

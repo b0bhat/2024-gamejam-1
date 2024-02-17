@@ -47,15 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burstCount: 1
   burstTime: 1
-  fireRate: 0.4
-  force: 0.5
+  fireRate: 0.5
+  force: 0.7
   spread: 30
   weaponType: 0
-  damage: 2
+  damage: 3
   bulletSpeed: 2
   penetration: 1
   angleBurst: 180
-  projInShot: 5
+  projInShot: 6
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
   bulletColor: {r: 0.47192192, g: 0, b: 1, a: 1}

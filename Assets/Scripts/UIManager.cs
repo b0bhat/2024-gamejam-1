@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void GameOverSequence()
     {
+        GameManager.instance.pauseLock = true;
         StartCoroutine(GameOverFlickerRoutine());
         _gameOver.SetActive(true);
     }
