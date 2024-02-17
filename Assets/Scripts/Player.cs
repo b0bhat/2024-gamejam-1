@@ -40,7 +40,8 @@ public class Player : MonoBehaviour
 
     public UIManager _UIManager;
 
-    public List<AttackScript> attacks = new List<AttackScript>();
+    public List<GameObject> attacks = new List<GameObject>();
+    [SerializeField] GameObject startAttackPrefab;
 
     private GameObject _UIchar;
     private GameObject _UIface;
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
         StartCoroutine(IncrementScore());
         _UIchar = GameObject.Find("UIcharacter");
         _UIface = GameObject.Find("UIface");
+        AddNewAttack(startAttackPrefab);
     }
 
     void Update() {
@@ -68,7 +70,7 @@ public class Player : MonoBehaviour
         }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetKeyDown("up")) {
+        if (Input.GetKeyDown("f")) {
             MoneyAdd(100);
         }
     }
@@ -79,22 +81,39 @@ public class Player : MonoBehaviour
         Vector2 lookDirection = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         player.transform.rotation = Quaternion.Euler(0, 0, angle);
-        foreach (AttackScript attack in attacks) {
-            attack.Check(true);
+        foreach (GameObject attack in attacks) {
+            attack.GetComponent<AttackScript>().Check(true);
         }
     }
 
-    public bool CheckAttack(GameObject upgradeAttack, String upgradeName) {
-        foreach (AttackScript attack in attacks) {
-            if (attack.checkUpgrade(upgradeAttack, upgradeName)) {
+    public void AddNewAttack(GameObject attackPrefab) {
+        GameObject newAttack = Instantiate(attackPrefab, Vector3.zero, Quaternion.identity, transform.GetChild(0));
+        newAttack.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        newAttack.name = attackPrefab.name;
+        attacks.Add(newAttack);
+    }
+
+    public bool CheckAttack(GameObject upgradeAttack) {
+        foreach (GameObject attack in attacks) {
+            Debug.Log(attack.name);
+            Debug.Log(upgradeAttack.name);
+            if (upgradeAttack.name == attack.name) {
+                return true;
+            }
+        } return false;
+    }
+
+    public bool CheckAttackUpgrade(GameObject upgradeAttack, String upgradeName) {
+        foreach (GameObject attack in attacks) {
+            if (attack.GetComponent<AttackScript>().checkUpgrade(upgradeAttack, upgradeName)) {
                 return true;
             }
         } return false;
     }
 
     public AttackScript GetAttack(GameObject upgradeAttack) {
-        foreach (AttackScript attack in attacks) {
-            if (attack.name.Equals(upgradeAttack.name)) {
+        foreach (GameObject attack in attacks) {
+            if (attack.GetComponent<AttackScript>().name.Equals(upgradeAttack.name)) {
                 return attack.GetComponent<AttackScript>();
             }
         } return null;

@@ -45,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440e164209802da44813d1670109360f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackName: BasicAttack
-  reloadTime: 2
   burstCount: 1
   burstTime: 1
   fireRate: 0.8
@@ -60,7 +58,7 @@ MonoBehaviour:
   projInShot: 1
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
-  bulletColor: {r: 1, g: 0.88550174, b: 0, a: 0}
+  bulletColor: {r: 1, g: 0.71290123, b: 0, a: 1}
   currentUpgrades: []
   cooldown: 0
   burstNum: 0

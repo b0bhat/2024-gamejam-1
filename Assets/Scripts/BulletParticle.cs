@@ -43,6 +43,7 @@ public class BulletParticle : MonoBehaviour
         penetration = pen;
         bulletColor = color;
         bulletSpeed = speed;
+        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = bulletColor;
 
         // bounceTimes = bounce;
         // curBounce = bounce;

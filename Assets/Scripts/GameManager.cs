@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
     [SerializeField] List<UpgradeAsset> attackUpgradeList = new();
+    [SerializeField] List<UpgradeAsset> attackTypeUpgradeList = new();
 
     UnityEngine.Rendering.Universal.ChromaticAberration ChromaticAberration;
 
@@ -56,6 +58,8 @@ public class GameManager : MonoBehaviour
         bulletColor
     }
 
+    private Player player;
+
     List<UpgradeAsset> selectedItems = new();
 
     // private bool canShake = true;
@@ -66,11 +70,11 @@ public class GameManager : MonoBehaviour
         pauseLock = true;
         UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
         profile.TryGet(out ChromaticAberration);
-        ChromaticAberration.intensity.Override(1.5f);
+        ChromaticAberration.intensity.Override(1f);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button1").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button2").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button3").gameObject);
-
+        player = Player.instance;
     }
 
     // Update is called once per frame
@@ -140,13 +144,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         List<UpgradeAsset> validUpgrades = new();
         // [TODO] Stat upgrades
-         foreach (UpgradeAsset upgrade in statUpgradeList) {
+        foreach (UpgradeAsset upgrade in statUpgradeList) {
          }
         // Check attack upgrades
         foreach (UpgradeAsset upgrade in attackUpgradeList) {
-            if (Player.instance.CheckAttack(upgrade.attackScript, upgrade.name)) {
+            if (player.CheckAttackUpgrade(upgrade.attackObject, upgrade.name)) {
                 validUpgrades.Add(upgrade);
             }
+        }
+
+        // Check new attack types
+        foreach (UpgradeAsset attackType in attackTypeUpgradeList) {
+            if (!player.CheckAttack(attackType.attackObject)) {
+                validUpgrades.Add(attackType);
+            } 
         }
 
         // pick 3 at random
@@ -157,7 +168,6 @@ public class GameManager : MonoBehaviour
                 selectedItems.Add(validUpgrades[randomIndex]); 
                 validUpgrades.RemoveAt(randomIndex); // prevent double pick
             }
-
             for (int i=0; i<selectedItems.Count; i++) {
                 upgrade_buttons[i].transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = selectedItems[i].assetName;
                 upgrade_buttons[i].transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = selectedItems[i].upgradeIcon;
@@ -174,13 +184,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         _upgradeUI.SetActive(false);
         pauseLock = false;
-        ApplyAttackUpgrade(selectedItems[num].attackScript, selectedItems[num]);
+        UpgradeAsset selectedUpgrade = selectedItems[num];
+        if (selectedUpgrade.upgradeType == 0 || selectedUpgrade.upgradeType == 1) {
+            ApplyAttackUpgrade(selectedUpgrade.attackObject, selectedUpgrade);
+        }
+        if (selectedUpgrade.upgradeType == 2) {
+            // [TODO] apply player stat upgrade
+        }
+        if (selectedUpgrade.upgradeType == 3) {
+            player.AddNewAttack(selectedUpgrade.attackObject);
+        }
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too
     }
 
-    public void ApplyAttackUpgrade(GameObject attackObject, UpgradeAsset upgradeAsset) {
-        AttackScript attack = Player.instance.GetAttack(attackObject);
+    private void ApplyAttackUpgrade(GameObject attackObject, UpgradeAsset upgradeAsset) {
+        AttackScript attack = player.GetAttack(attackObject);
         if (attack is null) {
             Debug.LogWarning("Missing AttackScript for apply upgrade!");
         }

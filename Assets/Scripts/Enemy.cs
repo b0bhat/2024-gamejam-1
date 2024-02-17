@@ -65,12 +65,18 @@ public class Enemy : MonoBehaviour
         if (health <= 0) {
             Die();
         }
-        if (Vector3.Distance(transform.position, player.gameObject.transform.position) < 0.5f ) {
-            dangerClose = true;
-            spriteRenderer.color = dangerColor;
-        } else if (dangerClose) {
-            dangerClose = false;
-            spriteRenderer.color = originalColor;
+        if (player != null) {
+            float playerDist = Vector3.Distance(transform.position, player.gameObject.transform.position);
+            if (playerDist < 0.5f ) {
+                dangerClose = true;
+                spriteRenderer.color = dangerColor;
+            } else if (dangerClose) {
+                dangerClose = false;
+                spriteRenderer.color = originalColor;
+            } else if (playerDist > 7f) {
+                //Debug.Log("deleted");
+                Destroy(gameObject); // Cleanup
+            }
         }
     }
 

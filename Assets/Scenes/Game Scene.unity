@@ -907,7 +907,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: IXILEMMA
+  m_text: BUILDING 3008
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c63eabce6d0076a4ca78e25291572d8e, type: 2}
   m_sharedMaterial: {fileID: -7003329785030805906, guid: c63eabce6d0076a4ca78e25291572d8e, type: 2}
@@ -1392,7 +1392,7 @@ MonoBehaviour:
   battleSong: {fileID: 8300000, guid: e85f6e31ceb20f743a5807108ce44c2a, type: 3}
   musicSource: {fileID: 1476444050}
   scaling: 1
-  scalingFactor: 0.02
+  scalingFactor: 0.015
   exponentialFactor: 0.8
   unlockCost: 100
   doorCost: 200
@@ -1403,6 +1403,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 280f113a2b9c2e94081ff66180768f66, type: 2}
   - {fileID: 11400000, guid: 08ef6d1276756f3438f46a90d4855dbc, type: 2}
   - {fileID: 11400000, guid: 7291cac051f737543989c1d666a51c40, type: 2}
+  - {fileID: 11400000, guid: 6ad87ad274aef214499b4fbd6567c661, type: 2}
+  - {fileID: 11400000, guid: 9ce5c188227f36a45b6024601ba0d1b7, type: 2}
+  - {fileID: 11400000, guid: a111a148b7cb4cd4182d7c42ff7cd16d, type: 2}
+  attackTypeUpgradeList:
+  - {fileID: 11400000, guid: dc038e3dfa4729440987db7f6d832e21, type: 2}
+  - {fileID: 11400000, guid: 1c776e7cd4e0cad4e9d0e5112be7165c, type: 2}
+  - {fileID: 11400000, guid: 9178a4af76131164f9d14b4d63187fcd, type: 2}
 --- !u!4 &640700003
 Transform:
   m_ObjectHideFlags: 0
@@ -4976,7 +4983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198318320347356578, guid: 50f673aceb686ea4c9c37ef9d534b068, type: 3}
       propertyPath: orthographic size
-      value: 3.5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

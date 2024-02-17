@@ -69,10 +69,12 @@ public class AttackScript : MonoBehaviour {
         }
     }
 
-    public bool checkUpgrade(GameObject attackScript, String upgradeName) {
+    public bool checkUpgrade(GameObject attackObject, String upgradeName) {
+        //Debug.Log(attackObject.name);
+        //Debug.Log(this.gameObject.name);
         // check correct attack, checks number of duplicate upgrades, if 2 or less, then good
         int count = currentUpgrades.Count(obj => obj.name == upgradeName);
-        return count <= 2 && attackScript.name.Equals(this.gameObject.name);
+        return count <= 2 && attackObject.name.Equals(this.gameObject.name);
     }
 
     // public void Reload() {

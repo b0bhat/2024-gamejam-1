@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c2473c6872545458233cb076892970, type: 3}
   m_Name: burst3
   m_EditorClassIdentifier: 
-  assetName: Upgrade
-  attackName: BurstAttack
+  assetName: Speed
+  attackObject: {fileID: 3547458165943492905, guid: 19cb694791badf541ae10ba5d78e5106, type: 3}
   upgradeType: 0
   upgradeIcon: {fileID: 0}
+  upgradeIconColor: {r: 0.60784316, g: 1, b: 0.003921569, a: 1}
   upgrades:
   - type: 2
     value: 0.3

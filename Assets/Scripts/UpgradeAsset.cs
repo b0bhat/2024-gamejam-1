@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UpgradeAsset", order =1)]
 public class UpgradeAsset : ScriptableObject {
     public String assetName = "Upgrade";
-    public GameObject attackScript;
+    public GameObject attackObject;
     public int upgradeType = 0;
+    // 0 for normal, 1 for ultimate, 2 for player stat, 3 for attack
     public Sprite upgradeIcon;
     public Color upgradeIconColor;
-    // 0 for normal, 1 for ultimate
     public List<Upgrade> upgrades = new List<Upgrade>();
 }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4837654600513910978}
   - component: {fileID: -7612721057666788621}
   m_Layer: 0
-  m_Name: SurroundAttack
+  m_Name: BurstAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,20 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440e164209802da44813d1670109360f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burstCount: 1
-  burstTime: 1
-  fireRate: 0.4
-  force: 0.5
-  spread: 30
+  burstCount: 3
+  burstTime: 3
+  fireRate: 0.8
+  force: 0.2
+  spread: 15
   weaponType: 0
   damage: 2
-  bulletSpeed: 2
+  bulletSpeed: 5
   penetration: 1
-  angleBurst: 180
-  projInShot: 5
+  angleBurst: 0
+  projInShot: 1
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
-  bulletColor: {r: 0.5147662, g: 0, b: 1, a: 1}
+  bulletColor: {r: 0.18177521, g: 1, b: 0, a: 1}
   currentUpgrades: []
   cooldown: 0
   burstNum: 0

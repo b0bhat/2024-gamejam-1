@@ -307,7 +307,7 @@ MonoBehaviour:
   attackCooldown: 0.5
   fadeInDuration: 2
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
-  dangerColor: {r: 1, g: 1, b: 1, a: 1}
+  dangerColor: {r: 0.41509432, g: 0.18209325, b: 0.18209325, a: 1}
   moneyPrefab: {fileID: 5205591416328645734, guid: 606d71dc42af0674484f73ee76f09fde, type: 3}
   deadPrefab: {fileID: 5865174006195169613, guid: 898468fa488c17945a2e357f90aa8f01, type: 3}
 --- !u!50 &1491574623935010223
