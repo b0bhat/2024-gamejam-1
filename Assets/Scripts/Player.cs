@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public int score = 0;
     public int money = 0; // currency
     public int maxHealth = 100;
-    private float health;
+    public float health;
 
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);

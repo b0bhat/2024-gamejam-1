@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,8 +31,9 @@ public class GameManager : MonoBehaviour
     float elapsedTime = 0f;
     public float exponentialFactor = 1f;
     public int unlockCost = 100;
-    public int doorCost = 200;
-    public int doorCostIncrease = 100;
+    public int doorCost = 100;
+    public int doorCostIncrease = 50;
+    public int chestCost = 100;
     bool pauseLock = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once

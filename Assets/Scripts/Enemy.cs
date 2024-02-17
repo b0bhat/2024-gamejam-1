@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     public Color damagedColor = new Color(1,0,0,1);
     public Color dangerColor = new Color(1,0,0,1);
 
-    private bool canDamage = true;
+    private bool canDamage = false;
     private bool damageFlashing = false;
     public GameObject moneyPrefab;
     public GameObject deadPrefab;
@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
         spriteRenderer.color = originalColor;
+        canDamage = true;
     }
 
     void FixedUpdate() {

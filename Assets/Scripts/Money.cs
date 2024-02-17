@@ -41,7 +41,7 @@ public class Money : MonoBehaviour
     private void Pickup() {
         Player.instance.MoneyAdd(value);
         if (pickupSound != null) {
-            //AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.1f);
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.5f);
         }
         Destroy(gameObject);
     }

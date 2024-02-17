@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 10
-  pickupSound: {fileID: 0}
+  pickupSound: {fileID: 8300000, guid: 9209b469e6a9fea4ba090014d477b86f, type: 3}
   pickupDistance: 0.2
 --- !u!50 &1133935084363779255
 Rigidbody2D:

@@ -88,7 +88,6 @@ public class Door : MonoBehaviour {
     private void DoorPurchase() {
         if (player.money >= manager.doorCost) {
             player.MoneySpend(manager.doorCost);
-            //CameraController.instance.ShakeCamera(0.01f, 0.1f);
             doorSprite.GetComponent<BoxCollider2D>().enabled=false;
             doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
             manager.FinishDoorPurchase();

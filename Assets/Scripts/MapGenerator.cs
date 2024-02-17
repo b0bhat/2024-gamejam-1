@@ -11,11 +11,13 @@ public class MapGenerator : MonoBehaviour
     #endregion
     public GameObject roomPrefab;
     public GameObject doorPrefab;
+    public GameObject chestPrefab;
     public int numRooms;
     public List<Vector2> roomPositions = new List<Vector2>();
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
     private int[] roomSizes = {2, 3, 4, 5, 6, 7};
+    [SerializeField] private int maxChests = 3;
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();
     
@@ -115,12 +117,21 @@ public class MapGenerator : MonoBehaviour
     void GenerateRoom(Vector2 position, int size, bool start=false) {
         GameObject room = Instantiate(roomPrefab, position, Quaternion.identity);
         Room roomScript = room.GetComponent<Room>();
+        int chestAmount = Random.Range(0, maxChests+1);
         roomScript.position_unit = position;
         roomScript.width_unit = size;
         roomScript.height_unit = size;
         roomScript.unit_mult = 1;
         if (start == true) {
             roomScript.hidden = false;
+            chestAmount = 0;
+        }
+        for (int i = 0; i < chestAmount; i++)
+        {
+            float x = position.x + Random.Range(1.0f, size-1.0f);
+            float y = position.y + Random.Range(1.0f, size-1.0f);
+            Vector2 chestPos = new Vector2(x, y);
+            Instantiate(chestPrefab, chestPos, Quaternion.identity);
         }
     }
 
