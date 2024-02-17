@@ -1393,7 +1393,7 @@ MonoBehaviour:
   musicSource: {fileID: 1476444050}
   scaling: 1
   scalingFactor: 0.015
-  exponentialFactor: 0.8
+  exponentialFactor: 0.5
   unlockCost: 100
   doorCost: 200
   doorCostIncrease: 100
@@ -1406,6 +1406,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ad87ad274aef214499b4fbd6567c661, type: 2}
   - {fileID: 11400000, guid: 9ce5c188227f36a45b6024601ba0d1b7, type: 2}
   - {fileID: 11400000, guid: a111a148b7cb4cd4182d7c42ff7cd16d, type: 2}
+  - {fileID: 11400000, guid: ad099e58568eb2848a991e8d60492c4a, type: 2}
+  - {fileID: 11400000, guid: a2a5600a8c61130479bc318071524054, type: 2}
+  - {fileID: 11400000, guid: 235451b5ab2a74446857a5f5bb1ab00f, type: 2}
+  - {fileID: 11400000, guid: f0d2f115a98d1ec45a45faae972ab220, type: 2}
+  - {fileID: 11400000, guid: fa0d30f8c5479ac4f8ca078baf9c096a, type: 2}
   attackTypeUpgradeList:
   - {fileID: 11400000, guid: dc038e3dfa4729440987db7f6d832e21, type: 2}
   - {fileID: 11400000, guid: 1c776e7cd4e0cad4e9d0e5112be7165c, type: 2}

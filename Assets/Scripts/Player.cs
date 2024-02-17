@@ -95,8 +95,8 @@ public class Player : MonoBehaviour
 
     public bool CheckAttack(GameObject upgradeAttack) {
         foreach (GameObject attack in attacks) {
-            Debug.Log(attack.name);
-            Debug.Log(upgradeAttack.name);
+            //Debug.Log(attack.name);
+            //Debug.Log(upgradeAttack.name);
             if (upgradeAttack.name == attack.name) {
                 return true;
             }
@@ -203,9 +203,9 @@ public class Player : MonoBehaviour
             _UIface.GetComponent<Image>().sprite = faces[3];
             _UIchar.GetComponent<Image>().color = deadCharColor;
         } else if (state == 3) {
-            StartCoroutine(UICharChange(hurtCharColor, faces[2], 0.5f));
+            StartCoroutine(UICharChange(hurtCharColor, faces[2], 1f));
         } else if (state == 2) {
-            StartCoroutine(UICharChange(moneyCharColor, faces[1], 0.2f));
+            StartCoroutine(UICharChange(moneyCharColor, faces[1], 0.8f));
         }      
     }
 

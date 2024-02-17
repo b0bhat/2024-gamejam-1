@@ -58,7 +58,7 @@ MonoBehaviour:
   projInShot: 5
   Bullet: {fileID: 1557927644542140383, guid: 944ebd451e18adc428a74fd303332a68, type: 3}
   firePoint: {fileID: 0}
-  bulletColor: {r: 0.5147662, g: 0, b: 1, a: 1}
+  bulletColor: {r: 0.47192192, g: 0, b: 1, a: 1}
   currentUpgrades: []
   cooldown: 0
   burstNum: 0

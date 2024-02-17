@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4c2473c6872545458233cb076892970, type: 3}
-  m_Name: surround4
+  m_Name: burst4
   m_EditorClassIdentifier: 
   assetName: Knockback
-  attackObject: {fileID: 3547458165943492905, guid: e05c3900783bc6848a2022ca95db3ff1, type: 3}
+  attackObject: {fileID: 3547458165943492905, guid: 19cb694791badf541ae10ba5d78e5106, type: 3}
   upgradeType: 0
-  upgradeIcon: {fileID: 21300000, guid: e1d89df69bb9b0842aa4a8070cee1301, type: 3}
-  upgradeIconColor: {r: 0.6901961, g: 0, b: 1, a: 1}
+  upgradeIcon: {fileID: 21300000, guid: 180ad4dcabff2cd409339f0a1276e68b, type: 3}
+  upgradeIconColor: {r: 0.60784316, g: 1, b: 0.003921569, a: 1}
   upgrades:
   - type: 3
     value: 0.3
