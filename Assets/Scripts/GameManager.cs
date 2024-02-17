@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
         bulletColor
     }
 
+    List<UpgradeAsset> selectedItems = new();
+
     // private bool canShake = true;
 
     private void Start() {
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         pauseLock = true;
         UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
         profile.TryGet(out ChromaticAberration);
-        ChromaticAberration.intensity.Override(2f);
+        ChromaticAberration.intensity.Override(1.5f);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button1").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button2").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button3").gameObject);
@@ -142,14 +144,14 @@ public class GameManager : MonoBehaviour
          }
         // Check attack upgrades
         foreach (UpgradeAsset upgrade in attackUpgradeList) {
-            if (Player.instance.CheckAttack(upgrade.attackName, upgrade.name)) {
+            if (Player.instance.CheckAttack(upgrade.attackScript, upgrade.name)) {
                 validUpgrades.Add(upgrade);
             }
         }
 
         // pick 3 at random
         if (validUpgrades != null && validUpgrades.Count >= 3) {
-            List<UpgradeAsset> selectedItems = new List<UpgradeAsset>();
+            selectedItems = new List<UpgradeAsset>();
             for (int i = 0; i < 3; i++){
                 int randomIndex = Random.Range(0, validUpgrades.Count);
                 selectedItems.Add(validUpgrades[randomIndex]); 
@@ -172,11 +174,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         _upgradeUI.SetActive(false);
         pauseLock = false;
+        ApplyAttackUpgrade(selectedItems[num].attackScript, selectedItems[num]);
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too
     }
 
-    public void ApplyAttackUpgrade(AttackScript attack, UpgradeAsset upgradeAsset) {
+    public void ApplyAttackUpgrade(GameObject attackObject, UpgradeAsset upgradeAsset) {
+        AttackScript attack = Player.instance.GetAttack(attackObject);
+        if (attack is null) {
+            Debug.LogWarning("Missing AttackScript for apply upgrade!");
+        }
         foreach (Upgrade upgrade in upgradeAsset.upgrades) {
             switch (upgrade.type) {
                 case UpgradeType.burstTime:

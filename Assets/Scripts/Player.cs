@@ -84,12 +84,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool CheckAttack(String attackName, String upgradeName) {
+    public bool CheckAttack(GameObject upgradeAttack, String upgradeName) {
         foreach (AttackScript attack in attacks) {
-            if (attack.checkUpgrade(attackName, upgradeName)) {
+            if (attack.checkUpgrade(upgradeAttack, upgradeName)) {
                 return true;
             }
         } return false;
+    }
+
+    public AttackScript GetAttack(GameObject upgradeAttack) {
+        foreach (AttackScript attack in attacks) {
+            if (attack.name.Equals(upgradeAttack.name)) {
+                return attack.GetComponent<AttackScript>();
+            }
+        } return null;
     }
 
     private IEnumerator IncrementScore() {
@@ -115,8 +123,7 @@ public class Player : MonoBehaviour
         }
         if (!invincible) {
             health -= damage;
-            if(audioSource.clip != hitAudio)
-            {
+            if(audioSource.clip != hitAudio) {
                 audioSource.clip = hitAudio;
             }
             audioSource.Play();
@@ -132,7 +139,7 @@ public class Player : MonoBehaviour
             _UIManager.GameOverSequence();
             this.GetComponent<Collider2D>().enabled = false;
             player.SetActive(false);
-            Destroy(this.gameObject, 2.0f);
+            Destroy(this.gameObject, 0.5f);
         } else {
             UIChar(3);
         }

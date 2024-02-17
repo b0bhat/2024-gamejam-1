@@ -983,10 +983,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicAttack
       objectReference: {fileID: 0}
-    - target: {fileID: 4837654600513910978, guid: 87a438ec57694604fa5cb41e6878ed37, type: 3}
-      propertyPath: firePoint
-      value: 
-      objectReference: {fileID: 2077834429861665117}
     - target: {fileID: 6136911157520245444, guid: 87a438ec57694604fa5cb41e6878ed37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

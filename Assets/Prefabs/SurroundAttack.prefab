@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4837654600513910978}
   - component: {fileID: -7612721057666788621}
   m_Layer: 0
-  m_Name: BasicAttack
+  m_Name: SurroundAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440e164209802da44813d1670109360f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackName: BasicAttack
+  attackName: SurroundAttack
   reloadTime: 2
   burstCount: 1
   burstTime: 1

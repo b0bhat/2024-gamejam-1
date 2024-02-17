@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);
+    public Color dangerColor = new Color(1,0,0,1);
 
     private bool canDamage = true;
     private bool damageFlashing = false;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
     private Coroutine attackCoroutine;
 
     private AudioSource audioSource;
+    private bool dangerClose;
 
     void Start()
     {
@@ -63,6 +65,13 @@ public class Enemy : MonoBehaviour
         if (health <= 0) {
             Die();
         }
+        if (Vector3.Distance(transform.position, player.gameObject.transform.position) < 0.5f ) {
+            dangerClose = true;
+            spriteRenderer.color = dangerColor;
+        } else if (dangerClose) {
+            dangerClose = false;
+            spriteRenderer.color = originalColor;
+        }
     }
 
     public void TakeDamage(float damage, Vector3 force) {
@@ -75,7 +84,7 @@ public class Enemy : MonoBehaviour
         health *= scale;
         speed += scale/10f;
         gameObject.transform.localScale += new Vector3(scale/50f,scale/50f,scale/50f);
-        damageAmount *= scale;
+        damageAmount *= scale/3;
     }
 
     IEnumerator DamageFlash() {

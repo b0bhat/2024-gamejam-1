@@ -19,7 +19,7 @@ public class Money : MonoBehaviour
     private void Update() {
         if (pickupStarted) {
             Vector3 direction = (playerTransform.position - transform.position).normalized;
-            rb.AddForce(direction * 1.5f, ForceMode2D.Force);
+            rb.AddForce(direction * 2.5f, ForceMode2D.Force);
             if (Vector3.Distance(transform.position, playerTransform.position) < pickupDistance) {
                 Pickup();
             }

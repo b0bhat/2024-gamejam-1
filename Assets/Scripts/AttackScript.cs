@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackScript : MonoBehaviour {
-    public String attackName = "BasicAttack";
-    public float reloadTime = 2f;
     public int burstCount = 1; // shots in a burst
     public float burstTime = 1f;
     public float fireRate = 1f; // Time between shots in a burst
@@ -46,6 +44,7 @@ public class AttackScript : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0.2f;
+        firePoint =  GameObject.Find("firepoint").transform;
     }
 
     public void Check(bool shooting) {
@@ -70,10 +69,10 @@ public class AttackScript : MonoBehaviour {
         }
     }
 
-    public bool checkUpgrade(String checkAttackName, String upgradeName) {
+    public bool checkUpgrade(GameObject attackScript, String upgradeName) {
         // check correct attack, checks number of duplicate upgrades, if 2 or less, then good
         int count = currentUpgrades.Count(obj => obj.name == upgradeName);
-        return count <= 2 && checkAttackName == attackName;
+        return count <= 2 && attackScript.name.Equals(this.gameObject.name);
     }
 
     // public void Reload() {
