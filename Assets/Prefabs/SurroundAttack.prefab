@@ -64,6 +64,7 @@ MonoBehaviour:
   burstNum: 0
   burstTick: 0
   firingtime: 0
+  alreadyUlt: 0
 --- !u!82 &-7612721057666788621
 AudioSource:
   m_ObjectHideFlags: 0
@@ -74,7 +75,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 593545aa11e753446bbc8e1af216ff9c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5cc7896ddb50b1449bab387b8699aa9f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1

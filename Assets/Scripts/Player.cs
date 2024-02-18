@@ -79,10 +79,6 @@ public class Player : MonoBehaviour
             movement.Normalize();
         }
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (Input.GetKeyDown("f")) {
-            MoneyAdd(100);
-        }
     }
 
     void FixedUpdate()
