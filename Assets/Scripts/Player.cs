@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public int maxHealth = 100;
     public float health;
     public int moneyIncrease = 0;
+    public float collectRange = 0.2f;
 
     private Color originalColor;
     public Color damagedColor = new Color(1,0,0,1);
@@ -112,9 +113,9 @@ public class Player : MonoBehaviour
         } return false;
     }
 
-    public bool CheckAttackUpgrade(GameObject upgradeAttack, String upgradeName) {
+    public bool CheckAttackUpgrade(GameObject upgradeAttack, String upgradeName, bool ult=false) {
         foreach (GameObject attack in attacks) {
-            if (attack.GetComponent<AttackScript>().checkUpgrade(upgradeAttack, upgradeName)) {
+            if (attack.GetComponent<AttackScript>().checkUpgrade(upgradeAttack, upgradeName, ult)) {
                 return true;
             }
         } return false;

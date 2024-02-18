@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audioSource;
     private bool dangerClose;
     float playerDist;
+    public bool canDamageObject = true;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0); 
         StartCoroutine(FadeIn());
         StartCoroutine(ApplyRandomForce());
+        canDamageObject = true;
     }
 
     IEnumerator FadeIn()
@@ -150,6 +152,9 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && canDamage) {
             attackCoroutine = StartCoroutine(AttackPlayerWithDelay());
         }
+        if (collision.gameObject.CompareTag("Object") && canDamageObject) {
+            attackCoroutine = StartCoroutine(AttackObjectWithDelay(collision.gameObject));
+        }
     }
 
     IEnumerator AttackPlayerWithDelay() {
@@ -160,4 +165,14 @@ public class Enemy : MonoBehaviour
             canDamage = true;
         }
     }
+
+    IEnumerator AttackObjectWithDelay(GameObject objectOfAttack) {
+        if (objectOfAttack != null && gameObject != null) {
+            canDamageObject = false;
+            objectOfAttack.GetComponent<ObjectScript>().Damage(damageAmount);
+            yield return new WaitForSeconds(attackCooldown);
+            canDamageObject = true;
+        }
+    }
+    
 }

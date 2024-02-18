@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public int doorCostIncrease = 100;
     public int chestCost = 100;
     public bool pauseLock = false;
+    public bool upgradeLock = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
         health,
         speed,
         moneyIncrease,
+        pickupRange,
+
     }
 
     private Player player;
@@ -168,7 +171,11 @@ public class GameManager : MonoBehaviour
         }
         // Check attack upgrades
         foreach (UpgradeAsset upgrade in attackUpgradeList) {
-            if (player.CheckAttackUpgrade(upgrade.attackObject, upgrade.name)) {
+            bool ult = false;
+            if (upgrade.upgradeType == 1) {
+                ult = true;
+            }
+            if (player.CheckAttackUpgrade(upgrade.attackObject, upgrade.name, ult)) {
                 validUpgrades.Add(upgrade);
             }
         }
@@ -219,6 +226,7 @@ public class GameManager : MonoBehaviour
         }
         //add selected upgrade to player
         // [TODO] add new attacks as upgrades too
+        upgradeLock = false;
     }
 
     private void ApplyStatUpgrade(UpgradeAsset upgradeAsset) {
@@ -233,6 +241,9 @@ public class GameManager : MonoBehaviour
                 case StatBuffType.moneyIncrease:
                     player.moneyIncrease += (int)statBuff.value;
                     break;
+                case StatBuffType.pickupRange:
+                    player.collectRange += statBuff.value;
+                    break;
             }
         }
     }
@@ -242,6 +253,10 @@ public class GameManager : MonoBehaviour
         if (attack is null) {
             Debug.LogWarning("Missing AttackScript for apply upgrade!");
         }
+        if (upgradeAsset.upgradeType == 1) {
+            attack.alreadyUlt = true;
+        }
+        attack.currentUpgrades.Add(upgradeAsset);
         foreach (Upgrade upgrade in upgradeAsset.upgrades) {
             switch (upgrade.type) {
                 case UpgradeType.burstTime:

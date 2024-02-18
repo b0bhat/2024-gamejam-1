@@ -53,7 +53,8 @@ public class Door : MonoBehaviour {
         if (!doorOpened) {
             ShowDoorUI();
             if (Input.GetKeyDown("space")) {
-                if (isPlayerNearby) {
+                if (isPlayerNearby && !manager.upgradeLock) {
+                    manager.upgradeLock = true;
                     DoorPurchase();
                 }
             }
@@ -95,7 +96,6 @@ public class Door : MonoBehaviour {
             player.MoneySpend(manager.doorCost);
             doorSprite.GetComponent<BoxCollider2D>().enabled=false;
             doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
-            manager.FinishDoorPurchase();
             player.Heal(30);
             doorOpened = true;
             foreach (Room room in rooms) {
@@ -104,6 +104,7 @@ public class Door : MonoBehaviour {
             doorCanvas.SetActive(false);
             audioSource.Play();
             manager.ShowUpgradeMenu();
+            manager.FinishDoorPurchase();
         }
     }
 

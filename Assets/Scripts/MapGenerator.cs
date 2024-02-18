@@ -12,12 +12,14 @@ public class MapGenerator : MonoBehaviour
     public GameObject roomPrefab;
     public GameObject doorPrefab;
     public GameObject chestPrefab;
+    public List<GameObject> objectPrefabs = new();
     public int numRooms;
     public List<Vector2> roomPositions = new List<Vector2>();
     public List<Vector2> occupiedPositions = new List<Vector2>();
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
-    private int[] roomSizes = {3, 4, 5, 6, 7, 8};
+    private int[] roomSizes = {3, 4, 5, 6, 7};
     [SerializeField] private int maxChests = 3;
+    [SerializeField] private int maxObjects = 8;
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();
     
@@ -117,21 +119,41 @@ public class MapGenerator : MonoBehaviour
     void GenerateRoom(Vector2 position, int size, bool start=false) {
         GameObject room = Instantiate(roomPrefab, position, Quaternion.identity);
         Room roomScript = room.GetComponent<Room>();
+        List<Vector2> chestPositions = new();
+        
         int chestAmount = Random.Range(0, maxChests+1);
+        int objectAmount = Random.Range(0, maxObjects+1);
         roomScript.position_unit = position;
         roomScript.width_unit = size;
         roomScript.height_unit = size;
         roomScript.unit_mult = 1;
         if (start == true) {
             roomScript.hidden = false;
+            roomScript.firstRoom = true;
             chestAmount = 0;
         }
-        for (int i = 0; i < chestAmount; i++)
-        {
+        for (int i = 0; i < chestAmount; i++) {
             float x = position.x + Random.Range(1.0f, size-1.0f);
             float y = position.y + Random.Range(1.0f, size-1.0f);
             Vector2 chestPos = new Vector2(x, y);
-            Instantiate(chestPrefab, chestPos, Quaternion.identity);
+            chestPositions.Add(chestPos);
+            Instantiate(chestPrefab, chestPos, Quaternion.identity, room.transform);
+        }
+        for (int i = 0; i < objectAmount; i++) {
+            int randomIndex = Random.Range(0, objectPrefabs.Count);
+            GameObject chosenObject = objectPrefabs[randomIndex];
+            Vector3 objectScale = chosenObject.transform.localScale;
+            float sideScale = Mathf.Max(objectScale.x, objectScale.y);
+            float x = position.x + Random.Range(sideScale, size-sideScale);
+            float y = position.y + Random.Range(sideScale, size-sideScale);
+            Vector2 objectPos = new Vector2(x, y);
+            bool isObstructed = false;
+            foreach (Vector2 chestPos in chestPositions) {
+                if (Vector2.Distance(objectPos, chestPos) < sideScale) {
+                    isObstructed = true;
+                }
+            }
+            if (!isObstructed) Instantiate(chosenObject, objectPos, Quaternion.identity, room.transform);
         }
     }
 

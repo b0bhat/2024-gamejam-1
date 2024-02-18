@@ -28,10 +28,11 @@ public class chest : MonoBehaviour
     void Update()
     {
         ShowChestUI();
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") &&  !manager.upgradeLock)
         {
             if (isPlayerNearby)
             {
+                manager.upgradeLock = true;
                 ChestPurchase();
             }
         }

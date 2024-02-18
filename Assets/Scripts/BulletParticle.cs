@@ -88,6 +88,19 @@ public class BulletParticle : MonoBehaviour
         GameObject other = collider.gameObject;
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) {
             Destroy(gameObject);
+        } else if (other.gameObject.CompareTag("Object")) {
+            Rigidbody2D otherRb = other.GetComponent<Rigidbody2D>();
+            other.GetComponent<ObjectScript>().Damage(damage*0.2f);
+            if (otherRb != null) {
+                Vector2 forceDirection = other.transform.position - transform.position;
+                forceDirection.Normalize();
+                Vector2 relativeVelocity = rb.velocity - otherRb.velocity;
+                Vector2 hitForce = force * relativeVelocity.normalized;
+                otherRb.AddForce(hitForce, ForceMode2D.Impulse);
+                float torque = -Vector3.Cross(forceDirection, relativeVelocity.normalized).z;
+                otherRb.AddTorque(torque * 1/otherRb.mass * hitForce.magnitude, ForceMode2D.Impulse);
+            }
+            Destroy(gameObject);
         }
         if(other.TryGetComponent(out Enemy enemy)) {
             Instantiate(hit, transform.position, transform.rotation);
@@ -95,7 +108,7 @@ public class BulletParticle : MonoBehaviour
                 alreadyPen++;
                 alreadyHit.Add(other);
                 other.GetComponent<Rigidbody2D>().AddForce(direction * force, ForceMode2D.Impulse);
-                enemy.TakeDamage(damage*Random.Range(0.8f,1.2f), rb.velocity * 0.2f*force);
+                enemy.TakeDamage(damage*Random.Range(0.8f,1.2f), rb.velocity * 0.1f*force);
                 if (alreadyPen >= penetration) {
                     Destroy(gameObject);
                 }

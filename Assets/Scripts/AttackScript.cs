@@ -32,6 +32,7 @@ public class AttackScript : MonoBehaviour {
     //public bool noAmmo;
 
     public float firingtime;
+    public bool alreadyUlt = false;
 
     void Start()
     {
@@ -69,12 +70,21 @@ public class AttackScript : MonoBehaviour {
         }
     }
 
-    public bool checkUpgrade(GameObject attackObject, String upgradeName) {
+    public bool checkUpgrade(GameObject attackObject, String upgradeName, bool ult=false) {
         //Debug.Log(attackObject.name);
         //Debug.Log(this.gameObject.name);
         // check correct attack, checks number of duplicate upgrades, if 2 or less, then good
-        int count = currentUpgrades.Count(obj => obj.name == upgradeName);
-        return count <= 2 && attackObject.name.Equals(this.gameObject.name);
+        int limit = 3;
+        if (ult) limit = 1;
+        bool belowCountLimit = currentUpgrades.Count(obj => obj.name == upgradeName) < limit;
+        bool correctAttack = attackObject.name.Equals(this.gameObject.name);
+        bool attackLimit;
+        if (ult) {
+            attackLimit = currentUpgrades.Count() == 5;
+        } else {
+            attackLimit = currentUpgrades.Count() <= 4 && !alreadyUlt;
+        }
+        return belowCountLimit && correctAttack && attackLimit;
     }
 
     // public void Reload() {

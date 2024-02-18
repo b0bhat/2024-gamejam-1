@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8881593735771724246}
   - component: {fileID: 3347832517402552669}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: fakeglow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2843717908488548222}
   - component: {fileID: 221692285221607462}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6865120882587385649}
   - component: {fileID: 5326285044820340523}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 8507686875400842517}
   - component: {fileID: 802893899337414934}
   - component: {fileID: 7371011412477175725}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: TankEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

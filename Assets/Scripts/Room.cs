@@ -24,6 +24,7 @@ public class Room : MonoBehaviour
     public bool hidden = true;
     public bool playerInRoom = false;
     public bool firstFrame = true;
+    public bool firstRoom = false;
     private AudioSource audioSource;
 
     public struct WallPair {
@@ -67,7 +68,11 @@ public class Room : MonoBehaviour
     }
 
     IEnumerator SpawnEnemy(GameObject wall) {
-        yield return new WaitForSeconds(Random.Range(0.1f, 4.0f));
+        if (firstRoom) {
+            yield return new WaitForSeconds(Random.Range(2f, 16.0f));
+        } else {
+            yield return new WaitForSeconds(Random.Range(0.1f, 4.0f));
+        }
         while (true) {
             if (ReferenceEquals(wall, null) || wall.Equals(null)){
                 yield break;

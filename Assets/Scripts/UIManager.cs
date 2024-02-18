@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     private GameObject _gameOver;
     [SerializeField]
     private TMP_Text _gameOverText;
+    [SerializeField]
+    private TMP_Text _gameOverScore;
 
     // Start is called before the first frame update
     void Start()
@@ -24,12 +26,14 @@ public class UIManager : MonoBehaviour
         _moneyText.text = "MONEY: " + 0;
         _gameOver.SetActive(false);
         _gameOverText.gameObject.SetActive(false);
+        _gameOverScore.gameObject.SetActive(false);
         _healthSlider = GameObject.FindWithTag("Health").GetComponent<Slider>();
     }
 
     public void UpdateScoreText(int score)
     {
         _scoreText.text = "SCORE: " + score;
+        _gameOverScore.text = "FINAL SCORE: " + score;
     }
     public void UpdateMoneyText(int money)
     {
@@ -51,6 +55,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.pauseLock = true;
         StartCoroutine(GameOverFlickerRoutine());
         _gameOver.SetActive(true);
+        _gameOverScore.gameObject.SetActive(true);
     }
 
     IEnumerator GameOverFlickerRoutine()

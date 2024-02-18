@@ -10,6 +10,7 @@ TagManager:
   - Money
   - Health
   - UI
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -19,13 +20,13 @@ TagManager:
   - UI
   - 
   - Player
-  - 
+  - BulletCollider
   - Bullet
   - Door
   - Wall
-  - 
+  - Item
   - Floor
-  - 
+  - Enemy
   - Post Process
   - 
   - 

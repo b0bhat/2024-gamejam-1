@@ -33,10 +33,10 @@ public class EnemyManager : MonoBehaviour {
     public void SpawnEnemy(Vector2 position) {
         GameObject enemyPrefab;
         float randomValue = Random.value;
-        if (randomValue <= 0.5f) {
+        if (randomValue <= 0.7f) {
             enemyPrefab = enemyStandardPrefab;
         }
-        else if (randomValue <= 0.9f) {
+        else if (randomValue <= 0.95f) {
             enemyPrefab = enemySwarmPrefab;
         } else {
             enemyPrefab = enemyTankPrefab;
