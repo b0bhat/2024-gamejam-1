@@ -28,11 +28,9 @@ public class chest : MonoBehaviour
     void Update()
     {
         ShowChestUI();
-        if (Input.GetKeyDown("space") &&  !manager.upgradeLock)
+        if (Input.GetKeyDown("space") && !manager.upgradeLock)
         {
-            if (isPlayerNearby)
-            {
-                manager.upgradeLock = true;
+            if (isPlayerNearby) {
                 ChestPurchase();
             }
         }
@@ -67,8 +65,8 @@ public class chest : MonoBehaviour
 
     private void ChestPurchase()
     {
-        if (player.money >= manager.unlockCost)
-        {
+        if (player.money >= manager.unlockCost) {
+            manager.upgradeLock = true;
             player.MoneySpend(manager.unlockCost);
             //player.Heal(player.maxHealth - player.health);
             audioSource.Play();

@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
     public void GameOverSequence()
     {
         GameManager.instance.pauseLock = true;
+        GameManager.instance.gameover = true;
         StartCoroutine(GameOverFlickerRoutine());
         _gameOver.SetActive(true);
         _gameOverScore.gameObject.SetActive(true);

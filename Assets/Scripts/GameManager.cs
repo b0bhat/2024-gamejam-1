@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public int chestCost = 100;
     public bool pauseLock = false;
     public bool upgradeLock = false;
+    public bool gameover = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
@@ -78,7 +79,8 @@ public class GameManager : MonoBehaviour
     private void Start() {
         Time.timeScale = 0;
         _menuUI.SetActive(true);
-        pauseLock = true;
+        pauseLock = false;
+        gameover = false;
         UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
         profile.TryGet(out ChromaticAberration);
         ChromaticAberration.intensity.Override(0.6f);
@@ -93,7 +95,7 @@ public class GameManager : MonoBehaviour
         // if (_menuUI.activeInHierarchy == true && canShake) {
         //     CameraController.instance.ShakeCamera(0.5f,1f);
         // }
-        if (Input.GetKeyDown(KeyCode.Escape) && !pauseLock){
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameover){
             PauseGame();
         }
     }
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
             _pauseText.SetActive(false);
         }
         else if (!_pauseUI.activeInHierarchy && !pauseLock) {
+
             Time.timeScale = 0;
             pauseLock = true;
             _pauseUI.SetActive(true);
