@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     public int doorCost = 100;
     public int doorCostIncrease = 100;
     public int chestCost = 100;
-    public bool pauseLock = false;
+    public bool pauseLock = true;
     public bool upgradeLock = false;
     public bool gameover = false;
     public bool deathAudio = false;

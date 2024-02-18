@@ -90,7 +90,7 @@ public class BulletParticle : MonoBehaviour
             Destroy(gameObject);
         } else if (other.gameObject.CompareTag("Object")) {
             Rigidbody2D otherRb = other.GetComponent<Rigidbody2D>();
-            other.GetComponent<ObjectScript>().Damage(damage*0.2f);
+            other.GetComponent<ObjectScript>().Damage(damage*0.1f);
             if (otherRb != null) {
                 Vector2 forceDirection = other.transform.position - transform.position;
                 forceDirection.Normalize();
