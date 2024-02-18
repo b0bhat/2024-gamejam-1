@@ -1792,7 +1792,7 @@ MonoBehaviour:
   tutorial: {fileID: 562997634}
   scaling: 1
   scalingFactor: 0.02
-  exponentialFactor: 0.3
+  exponentialFactor: 0.5
   unlockCost: 100
   unlockCostIncrease: 50
   doorCost: 100
