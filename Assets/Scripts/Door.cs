@@ -54,7 +54,6 @@ public class Door : MonoBehaviour {
             ShowDoorUI();
             if (Input.GetKeyDown("space")) {
                 if (isPlayerNearby && !manager.upgradeLock) {
-                    manager.upgradeLock = true;
                     DoorPurchase();
                 }
             }
@@ -93,6 +92,7 @@ public class Door : MonoBehaviour {
 
     private void DoorPurchase() {
         if (player.money >= manager.doorCost) {
+            manager.upgradeLock = true;
             player.MoneySpend(manager.doorCost);
             doorSprite.GetComponent<BoxCollider2D>().enabled=false;
             doorSprite.GetComponent<SpriteRenderer>().color=openedColor;
