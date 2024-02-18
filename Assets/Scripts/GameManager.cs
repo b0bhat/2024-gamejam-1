@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioClip battleSong;
     [SerializeField]
+    private AudioClip introSong;
+    [SerializeField]
+    private AudioClip gameOverSong;
+    [SerializeField]
     private AudioSource musicSource;
     [SerializeField]
     private GameObject tutorial;
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
     public bool pauseLock = false;
     public bool upgradeLock = false;
     public bool gameover = false;
+    public bool deathAudio = false;
     // bool doorCurPurchase = false;
     // [TODO] implement later, prevent edge case where player can buy two doors at once
     [SerializeField] List<UpgradeAsset> statUpgradeList = new();
@@ -98,6 +103,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !gameover){
             PauseGame();
         }
+
+        if (gameover && !deathAudio)
+        {
+            GameOverAudio();
+        }
     }
 
     // IEnumerator ScreenShake() {
@@ -122,19 +132,41 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (_pauseUI.activeInHierarchy) {
-            Time.timeScale = 1;
-            pauseLock = false;
-            _pauseUI.SetActive(false);
-            _pauseText.SetActive(false);
-        }
-        else if (!_pauseUI.activeInHierarchy && !pauseLock) {
+        if (!gameover)
+        {
+            if (_pauseUI.activeInHierarchy)
+            {
+                Time.timeScale = 1;
+                pauseLock = false;
+                _pauseUI.SetActive(false);
+                _pauseText.SetActive(false);
+            }
+            else if (!_pauseUI.activeInHierarchy && !pauseLock)
+            {
 
-            Time.timeScale = 0;
-            pauseLock = true;
-            _pauseUI.SetActive(true);
-            _pauseText.SetActive(true);
+                Time.timeScale = 0;
+                pauseLock = true;
+                _pauseUI.SetActive(true);
+                _pauseText.SetActive(true);
+            }
         }
+    }
+
+    public void GameOverAudio()
+    {
+        deathAudio = true;
+        StartCoroutine(GameOverSounds());
+    }
+
+    IEnumerator GameOverSounds()
+    {
+        musicSource.clip = gameOverSong;
+        musicSource.loop = false;
+        musicSource.Play();
+        yield return new WaitForSeconds(5f);
+        musicSource.clip = introSong;
+        musicSource.loop = true;
+        musicSource.Play();
     }
 
     public void Quit()

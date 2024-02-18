@@ -388,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.5
   drift: 0.8
-  damageAmount: 8
+  damageAmount: 15
   health: 5
   maxHealth: 10
   force: 1

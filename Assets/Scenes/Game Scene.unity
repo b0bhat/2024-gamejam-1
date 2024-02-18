@@ -1786,6 +1786,8 @@ MonoBehaviour:
   _menuUI: {fileID: 896400223}
   _upgradeUI: {fileID: 1123223659}
   battleSong: {fileID: 8300000, guid: e85f6e31ceb20f743a5807108ce44c2a, type: 3}
+  introSong: {fileID: 8300000, guid: a96085501f092ed46b740ca259021751, type: 3}
+  gameOverSong: {fileID: 8300000, guid: c5690e77cb14d9745a70c3b4b28d66ba, type: 3}
   musicSource: {fileID: 1476444050}
   tutorial: {fileID: 562997634}
   scaling: 1
@@ -1798,6 +1800,8 @@ MonoBehaviour:
   chestCost: 100
   pauseLock: 0
   upgradeLock: 0
+  gameover: 0
+  deathAudio: 0
   statUpgradeList:
   - {fileID: 11400000, guid: b11f0efb9cd435f4e960b1a9f41a735d, type: 2}
   - {fileID: 11400000, guid: 6c7d8a5d810e8c84dbcf13bfc2f8eb75, type: 2}
@@ -4750,7 +4754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.3999939, y: -9.5}
+  m_AnchoredPosition: {x: 1.4000244, y: -9.5}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1436673469
@@ -4825,7 +4829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.3999939, y: -9.5}
+  m_AnchoredPosition: {x: 1.4000244, y: -9.5}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1460703038
