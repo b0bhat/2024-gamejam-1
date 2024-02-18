@@ -74,10 +74,10 @@ public class Enemy : MonoBehaviour
         }
         if (player != null) {
             playerDist = Vector3.Distance(transform.position, player.gameObject.transform.position);
-            if (playerDist < 0.5f ) {
+            if (playerDist < 0.5f && !damageFlashing) {
                 dangerClose = true;
                 spriteRenderer.color = dangerColor;
-            } else if (dangerClose) {
+            } else if (dangerClose && !damageFlashing) {
                 dangerClose = false;
                 spriteRenderer.color = originalColor;
             } else if (playerDist > 7f) {

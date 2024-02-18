@@ -19,7 +19,7 @@ public class MapGenerator : MonoBehaviour
     public List<Vector2> doorPositions = new List<Vector2>(); // Tracks all door positions
     private int[] roomSizes = {3, 4, 5, 6, 7};
     [SerializeField] private int maxChests = 3;
-    [SerializeField] private int maxObjects = 8;
+    //[SerializeField] private int maxObjects = 8;
     public Dictionary<Vector2, List<Vector2>> adjacencyMap = new Dictionary<Vector2, List<Vector2>>();
     public List<GameObject> walls = new List<GameObject>();
     
@@ -122,7 +122,7 @@ public class MapGenerator : MonoBehaviour
         List<Vector2> chestPositions = new();
         
         int chestAmount = Random.Range(0, maxChests+1);
-        int objectAmount = Random.Range(0, maxObjects+1);
+        int objectAmount = Random.Range(0, (size/2)+2);
         roomScript.position_unit = position;
         roomScript.width_unit = size;
         roomScript.height_unit = size;

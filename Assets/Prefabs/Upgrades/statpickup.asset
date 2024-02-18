@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4c2473c6872545458233cb076892970, type: 3}
-  m_Name: statspeed 1
+  m_Name: statpickup
   m_EditorClassIdentifier: 
   assetName: Pickup Range
   attackObject: {fileID: 0}
   upgradeType: 2
-  upgradeIcon: {fileID: 21300000, guid: 2987006ba75044547b5dc621b3d3033c, type: 3}
+  upgradeIcon: {fileID: 21300000, guid: ac550750abd93d642a4e325d07f62bf1, type: 3}
   upgradeIconColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   upgrades: []
   statbuffs:

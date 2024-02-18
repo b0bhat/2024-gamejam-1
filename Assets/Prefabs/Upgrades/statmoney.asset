@@ -15,7 +15,7 @@ MonoBehaviour:
   assetName: Increased Profit
   attackObject: {fileID: 0}
   upgradeType: 2
-  upgradeIcon: {fileID: 21300000, guid: 2987006ba75044547b5dc621b3d3033c, type: 3}
+  upgradeIcon: {fileID: 21300000, guid: ac550750abd93d642a4e325d07f62bf1, type: 3}
   upgradeIconColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
   upgrades: []
   statbuffs:

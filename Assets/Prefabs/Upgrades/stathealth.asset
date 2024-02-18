@@ -15,7 +15,7 @@ MonoBehaviour:
   assetName: More Health
   attackObject: {fileID: 0}
   upgradeType: 2
-  upgradeIcon: {fileID: 21300000, guid: 2987006ba75044547b5dc621b3d3033c, type: 3}
+  upgradeIcon: {fileID: 21300000, guid: c10f2e7c66df5224796ae61f83426cce, type: 3}
   upgradeIconColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
   upgrades: []
   statbuffs:

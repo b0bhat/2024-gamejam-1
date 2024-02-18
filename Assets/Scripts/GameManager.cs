@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
         pauseLock = true;
         UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
         profile.TryGet(out ChromaticAberration);
-        ChromaticAberration.intensity.Override(1f);
+        ChromaticAberration.intensity.Override(0.6f);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button1").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button2").gameObject);
         upgrade_buttons.Add(_upgradeUI.transform.Find("upgrade_button3").gameObject);
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         //CameraController.instance.ShakeCamera(0.1f,2f);
     }
     public void TutorialScreen () {
-        ChromaticAberration.intensity.Override(0.15f);
+        ChromaticAberration.intensity.Override(0.2f);
         tutorial.gameObject.SetActive(true);
         _menuUI.SetActive(false);
         //CameraController.instance.ShakeCamera(0.1f,2f);
