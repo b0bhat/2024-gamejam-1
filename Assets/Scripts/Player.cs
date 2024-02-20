@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     private GameObject _UIchar;
     private GameObject _UIface;
     [SerializeField] List<Sprite> faces = new();
+    public LayerMask roomLayerMask;
 
     // UnityEngine.Rendering.Universal.Vignette Vignette;
     // UnityEngine.Rendering.ColorParameter vignetteOriginalColor;
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
         _UIchar = GameObject.Find("UIcharacter");
         _UIface = GameObject.Find("UIface");
         AddNewAttack(startAttackPrefab);
+        //StartCoroutine(CheckPlayerRoom());
         // UnityEngine.Rendering.VolumeProfile profile = GameObject.Find("PostProcessVolume").GetComponent<UnityEngine.Rendering.Volume>().profile;
         // profile.TryGet(out Vignette);
         // vignetteOriginalColor = Vignette.color;
@@ -178,6 +180,18 @@ public class Player : MonoBehaviour
         spriteRenderer.color = originalColor;
         //Vignette.color = vignetteOriginalColor;
     }
+
+    // IEnumerator CheckPlayerRoom()
+    // {
+    //     while (true) {
+    //         yield return new WaitForSeconds(2.0f);
+    //         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, roomLayerMask);
+    //         Debug.Log(colliders.Length);
+    //         if (colliders.Length <= 0) {
+    //             Damage(1000, Vector3.zero);
+    //         }
+    //     }
+    // }
 
     public void Heal(int amount, bool maxUp=false) {
         if (maxUp) {

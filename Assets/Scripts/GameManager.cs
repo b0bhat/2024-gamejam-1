@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
 
     public void Scale() {
         elapsedTime += 1f;
+        exponentialFactor *= 0.997f;
         GameManager.instance.scaling = Mathf.Pow(1 + scalingFactor, elapsedTime*exponentialFactor);
     }
 
@@ -271,7 +272,7 @@ public class GameManager : MonoBehaviour
                     player.Heal((int)statBuff.value, true);
                     break;
                 case StatBuffType.speed:
-                    player.moveSpeed += (int)statBuff.value;
+                    player.moveSpeed += statBuff.value;
                     break;
                 case StatBuffType.moneyIncrease:
                     player.moneyIncrease += (int)statBuff.value;

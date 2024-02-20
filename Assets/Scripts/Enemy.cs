@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public Color dangerColor = new Color(1,0,0,1);
 
     private bool canDamage = false;
+    private bool canBeDamaged = true;
     private bool damageFlashing = false;
     public GameObject moneyPrefab;
     public GameObject deadPrefab;
@@ -31,6 +32,8 @@ public class Enemy : MonoBehaviour
     private bool dangerClose;
     float playerDist;
     public bool canDamageObject = true;
+    Vector3 origScale;
+    float origMass;
 
     void Start()
     {
@@ -41,6 +44,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0); 
+        canBeDamaged = false;
         StartCoroutine(FadeIn());
         StartCoroutine(ApplyRandomForce());
         canDamageObject = true;
@@ -59,6 +63,7 @@ public class Enemy : MonoBehaviour
         }
         spriteRenderer.color = originalColor;
         canDamage = true;
+        canBeDamaged = true;
     }
 
     void FixedUpdate() {
@@ -101,16 +106,19 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(float damage, Vector3 force) {
-        rb.AddForce(force, ForceMode2D.Impulse);
-        Hurt(damage);
+        if (canBeDamaged) {
+            rb.AddForce(force, ForceMode2D.Impulse);
+            Hurt(damage);
+        }
     }
 
     public void SetScaling(float scale) {
         maxHealth *= scale;
         health *= scale;
-        speed += scale/10f;
-        gameObject.transform.localScale += new Vector3(scale/50f,scale/50f,scale/50f);
-        damageAmount *= scale/3;
+        speed += scale/20f;
+        gameObject.transform.localScale *= Mathf.Min(1+(scale/40f), 3f);
+        GetComponent<Rigidbody2D>().mass *= Mathf.Min(1+(scale/50f), 3f);
+        damageAmount *= scale/15;
     }
 
     IEnumerator DamageFlash() {

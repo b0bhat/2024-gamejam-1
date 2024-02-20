@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6680783056884212537}
   - component: {fileID: 5254921096519980234}
   - component: {fileID: 1611870058077357387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +61,7 @@ MonoBehaviour:
   hidden: 1
   playerInRoom: 0
   firstFrame: 1
+  firstRoom: 0
 --- !u!61 &5254921096519980234
 BoxCollider2D:
   m_ObjectHideFlags: 0

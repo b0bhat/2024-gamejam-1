@@ -80,9 +80,9 @@ public class AttackScript : MonoBehaviour {
         bool correctAttack = attackObject.name.Equals(this.gameObject.name);
         bool attackLimit;
         if (ult) {
-            attackLimit = currentUpgrades.Count() == 5;
+            attackLimit = currentUpgrades.Count() == 6;
         } else {
-            attackLimit = currentUpgrades.Count() <= 4 && !alreadyUlt;
+            attackLimit = currentUpgrades.Count() <= 5 && !alreadyUlt;
         }
         return belowCountLimit && correctAttack && attackLimit;
     }

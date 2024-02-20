@@ -797,6 +797,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   moneyIncrease: 0
+  collectRange: 0.2
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
   normalCharColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   moneyCharColor: {r: 0.8490566, g: 0.756942, b: 0.80299926, a: 1}
@@ -814,6 +815,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 707123a8a1d259245a30085f92b5ad80, type: 3}
   - {fileID: 21300000, guid: 720d754e65f530b4787ff321ff66ad4a, type: 3}
   - {fileID: 21300000, guid: 9e2c63f8e92dbe246add9b4d5df5e5c7, type: 3}
+  roomLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &1253388610970022580
 Rigidbody2D:
   serializedVersion: 4
