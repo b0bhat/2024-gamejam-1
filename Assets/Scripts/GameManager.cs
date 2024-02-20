@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         // if (_menuUI.activeInHierarchy == true && canShake) {
         //     CameraController.instance.ShakeCamera(0.5f,1f);
         // }
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameover){
+        if (Input.GetKeyDown(KeyCode.Escape)){
             PauseGame();
         }
 
@@ -198,6 +198,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void ShowUpgradeMenu() {
+        pauseLock = true;
         Time.timeScale = 0;
         List<UpgradeAsset> validUpgrades = new();
 
@@ -240,13 +241,12 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Less than 3 available upgrades!");
         }
         _upgradeUI.SetActive(true);
-        pauseLock = true;
     }
 
     public void UpgradeSelected(int num) {
-        Time.timeScale = 1;
         _upgradeUI.SetActive(false);
         pauseLock = false;
+        Time.timeScale = 1;
         UpgradeAsset selectedUpgrade = selectedItems[num];
         if (selectedUpgrade.upgradeType == 0 || selectedUpgrade.upgradeType == 1) {
             ApplyAttackUpgrade(selectedUpgrade.attackObject, selectedUpgrade);
