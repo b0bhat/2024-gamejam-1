@@ -119,8 +119,8 @@ public class GameManager : MonoBehaviour
 
     public void Scale() {
         elapsedTime += 1f;
-        exponentialFactor *= 0.997f;
-        GameManager.instance.scaling = Mathf.Pow(1 + scalingFactor, elapsedTime*exponentialFactor);
+        float currentScalingFactor = scalingFactor / (1 + elapsedTime * 0.00005f);
+        GameManager.instance.scaling = Mathf.Pow(1 + currentScalingFactor, elapsedTime * exponentialFactor);
     }
 
     public void FinishDoorPurchase() {

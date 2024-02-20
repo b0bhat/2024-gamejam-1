@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator IncrementScore() {
         while (true) {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.75f);
             ScoreAdd(10);
             GameManager.instance.Scale();
         }
@@ -143,11 +143,6 @@ public class Player : MonoBehaviour
     }
 
     public void Damage(float damage, Vector3 force) {
-        if (_UIManager != null) {
-            _UIManager.UpdateHealthSlider(health);
-        } else {
-            Debug.LogWarning("_UIManager is null in Damage method!");
-        }
         if (!invincible) {
             health -= damage;
             rb.AddForce(force, ForceMode2D.Impulse);
@@ -157,6 +152,11 @@ public class Player : MonoBehaviour
             audioSource.Play();
             CameraController.instance.ShakeCamera(0.15f, 0.05f);
             StartCoroutine(DamageFlash());
+        }
+        if (_UIManager != null) {
+            _UIManager.UpdateHealthSlider(health);
+        } else {
+            Debug.LogWarning("_UIManager is null in Damage method!");
         }
         if (health <= 0) {
             if (audioSource.clip != deathAudio){

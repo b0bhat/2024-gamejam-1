@@ -1791,12 +1791,12 @@ MonoBehaviour:
   musicSource: {fileID: 1476444050}
   tutorial: {fileID: 562997634}
   scaling: 1
-  scalingFactor: 0.04
-  exponentialFactor: 0.4
-  unlockCost: 100
+  scalingFactor: 0.02
+  exponentialFactor: 0.5
+  unlockCost: 50
   unlockCostIncrease: 50
   doorCost: 100
-  doorCostIncrease: 50
+  doorCostIncrease: 75
   chestCost: 100
   pauseLock: 1
   upgradeLock: 0
@@ -2459,7 +2459,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
     m_HighlightedColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
     m_PressedColor: {r: 0.5754717, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2493,7 +2493,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 640700002}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3597,7 +3597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESTART
+  m_text: RESUME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24049a5df3f405440ad56145a0f0e1d6, type: 2}
   m_sharedMaterial: {fileID: 1652873214979824691, guid: 24049a5df3f405440ad56145a0f0e1d6, type: 2}
@@ -3930,7 +3930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -35.899994, y: 15.100006}
+  m_AnchoredPosition: {x: -35.900024, y: 15.100006}
   m_SizeDelta: {x: 63.660004, y: 24.970001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1219992000
@@ -4081,14 +4081,6 @@ PrefabInstance:
     - target: {fileID: 6019538224872140206, guid: f4fef690d887f0948b00e39150909b16, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379338926057302433, guid: f4fef690d887f0948b00e39150909b16, type: 3}
-      propertyPath: invincible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379338926057302433, guid: f4fef690d887f0948b00e39150909b16, type: 3}
-      propertyPath: roomLayerMask.m_Bits
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8603774341966624973, guid: f4fef690d887f0948b00e39150909b16, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4816,6 +4808,18 @@ MonoBehaviour:
       - m_Target: {fileID: 640700002}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: TutorialScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 465801539}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5804,7 +5808,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
     m_HighlightedColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
     m_PressedColor: {r: 0.5754717, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5826,7 +5830,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 640700002}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6077,7 +6081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: QUIT
+  m_text: RESTART
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24049a5df3f405440ad56145a0f0e1d6, type: 2}
   m_sharedMaterial: {fileID: 1652873214979824691, guid: 24049a5df3f405440ad56145a0f0e1d6, type: 2}
@@ -6087,7 +6091,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278218239
-  m_fontColor: {r: 1, g: 0.42745098, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 0, b: 0.16923761, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

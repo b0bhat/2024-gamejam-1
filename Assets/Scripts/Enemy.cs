@@ -115,10 +115,10 @@ public class Enemy : MonoBehaviour
     public void SetScaling(float scale) {
         maxHealth *= scale;
         health *= scale;
-        speed += scale/20f;
+        speed += scale/25f;
         gameObject.transform.localScale *= Mathf.Min(1+(scale/40f), 3f);
         GetComponent<Rigidbody2D>().mass *= Mathf.Min(1+(scale/50f), 3f);
-        damageAmount *= scale/15;
+        damageAmount *= scale/20;
     }
 
     IEnumerator DamageFlash() {
